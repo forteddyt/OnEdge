@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Bing Meteor Game</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    	canvas { background: #eee; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
+
+<canvas id="gameCanvas" width="480" height="320"></canvas>
+
+
+
+<script>
+var canvas = document.getElementById("gameCanvas");
+var ctx = canvas.getContext("2d");
+var charHeight = 30;
+var platformHeight = 10;
+var charWidth = 20;
+var meteorRad = 5;
+var platformWidth = canvas.width*2/3;
+var platformX = (canvas.width-platformWidth)/2; //left bound of the platform
+var charX = canvas.width / 2; //left bound of the character
+var rightPressed = false; //true iff right keyboard was pressed
+var leftPressed = false; //true iff left keyboard was pressed
+var meteors = []; //array of all meteors on screen
+var frameCount = 0; //ticker that increments each frame
+var gameOver = false; //true iff game player has lost
+var charSpeed = 2;//default movement speed of the player per frame
+var meteorSpeed = 1; //default fall speed for meteors per frame
+
+var interval = setInterval(draw, 10);//sets max framerate of the game
+
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
+
+//nput Handling
+function keyDownHandler(e) {
+    if(e.key == "Right" || e.key == "ArrowRight") {
+        rightPressed = true;
+    }
+    else if(e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = true;
+    }
+}
+
+function keyUpHandler(e) {
+    if(e.key == "Right" || e.key == "ArrowRight") {
+        rightPressed = false;
+    }
+    else if(e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = false;
+    }
+}
+
+//Drawing
+function drawChar() {
+	//TODO asset for character
+    ctx.beginPath();
+    ctx.rect(charX, canvas.height-charHeight-platformHeight, charWidth, charHeight);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
+}
+
+function drawPlatform() {
+	//TODO asset for platform
+    ctx.beginPath();
+    ctx.rect(platformX, canvas.height-platformHeight, platformWidth, platformHeight);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
+}
+
+function drawMeteors() {
+	//TODO meteors shouldn't be just a circle
+	for (i = 0; i < meteors.length; i++) {
+	    ctx.beginPath();
+	    ctx.arc(meteors[i].x + meteorRad/2, meteors[i].y + meteorRad/2, meteorRad, 0, Math.PI*2);
+	    ctx.fillStyle = "#0095DD";
+	    ctx.fill();
+	    ctx.closePath();
+	}
+}
+
+//Game Controllers
+function spawnMeteor() {
+	//TODO, implement more than just simple random spawning
+	//TODO, implement more types of meteors to be spawned
+	var meteorX = Math.random()*(canvas.width - 2*meteorRad) + meteorRad;
+	meteors.push({x: meteorX, y: 0});
+}
+
+function moveCharacter() {
+	if(rightPressed && charX < canvas.width-charWidth) {
+        charX += charSpeed;
+    }
+    else if(leftPressed && charX > 0) {
+        charX -= charSpeed;
+    }
+
+    if (frameCount % 100 == 0) {
+    	spawnMeteor();
+    }
+}
+
+function moveMeteors() {
+	//TODO, implement more than just the default meteor behavior
+	for (i = 0; i < meteors.length; i++) {
+		meteors[i].y += meteorSpeed;
+	}
+}
+
+function destroyMeteors() {
+	while (true) {
+		if (meteors.length > 0 && meteors[0].y > canvas.height + meteorRad * 2) {
+			meteors.shift();
+		} else {
+			break;
+		}
+	}
+}
+
+function checkCollisions() {
+	for (i = 0; i < meteors.length; i++) {
+		if (charX < meteors[i].x &&
+			meteors[i].x < charX + charWidth &&
+			meteors[i].y >= canvas.height - (charHeight + platformHeight) && 
+			meteors[i].y < canvas.height - platformHeight) {
+			console.log("colilded");
+			console.log("char x: " + charX);
+			gameOver = true;
+		}
+	}
+}
+
+function performAnimations() {
+	//TODO
+}
+
+function drawBackground() {
+	//TODO
+}
+
+function 
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    drawChar();
+    drawPlatform();
+    drawMeteors();
+
+    moveCharacter();
+    moveMeteors();
+    destroyMeteors();
+
+    checkCollisions();
+
+	if (gameOver) {
+		console.log("GAME OVER");
+		document.location.reload();
+		clearInterval(interval);
+	}
+    
+    frameCount++;
+}
+
+</script>
+
+</body>
+</html>
