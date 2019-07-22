@@ -38,7 +38,7 @@ document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
 
-//nput Handling
+//Input Handling
 function keyDownHandler(e) {
     if(e.key == "Right" || e.key == "ArrowRight") {
         rightPressed = true;
@@ -59,7 +59,6 @@ function keyUpHandler(e) {
 
 //Drawing
 function drawChar() {
-	//TODO asset for character
     ctx.beginPath();
     ctx.rect(charX, canvas.height-charHeight-platformHeight, charWidth, charHeight);
     ctx.fillStyle = "#0095DD";
@@ -68,7 +67,6 @@ function drawChar() {
 }
 
 function drawPlatform() {
-	//TODO asset for platform
     ctx.beginPath();
     ctx.rect(platformX, canvas.height-platformHeight, platformWidth, platformHeight);
     ctx.fillStyle = "#0095DD";
@@ -77,7 +75,6 @@ function drawPlatform() {
 }
 
 function drawMeteors() {
-	//TODO meteors shouldn't be just a circle
 	for (i = 0; i < meteors.length; i++) {
 	    ctx.beginPath();
 	    ctx.arc(meteors[i].x + meteorRad/2, meteors[i].y + meteorRad/2, meteorRad, 0, Math.PI*2);
@@ -89,8 +86,6 @@ function drawMeteors() {
 
 //Game Controllers
 function spawnMeteor() {
-	//TODO, implement more than just simple random spawning
-	//TODO, implement more types of meteors to be spawned
 	var meteorX = Math.random()*(canvas.width - 2*meteorRad) + meteorRad;
 	meteors.push({x: meteorX, y: 0});
 }
@@ -109,7 +104,6 @@ function moveCharacter() {
 }
 
 function moveMeteors() {
-	//TODO, implement more than just the default meteor behavior
 	for (i = 0; i < meteors.length; i++) {
 		meteors[i].y += meteorSpeed;
 	}
@@ -139,14 +133,10 @@ function checkCollisions() {
 }
 
 function performAnimations() {
-	//TODO
 }
 
 function drawBackground() {
-	//TODO
 }
-
-function 
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
