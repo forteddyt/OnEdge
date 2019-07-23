@@ -2,13 +2,14 @@ MeteorImg = new Image();
 MeteorImg.src = 'images/asteroid-png-8-bit.png'
 meteors = new Array()
 
-function Meteor(canvasCtx){
+function Meteor(canvasCtx, space){
     this.canvasCtx = canvasCtx
     this.xPos = 0;
     this.yPos = 0;
     this.dX = 0;
     this.dY = 0;
     this.imgSprite = null;
+    this.space = space;
 
     this.init()
 }
@@ -30,6 +31,8 @@ Meteor.prototype = {
 
             this.xPos += this.dX
             this.yPos += this.dY
+        } else {
+          this.space.removeMeteor(this);
         }
     },
     update: function() {
