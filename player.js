@@ -15,8 +15,8 @@ function Player(canvas, document) {
 
 Player.prototype = {
 	init: function(){
-		this.document.addEventListener("keydown", this.keyDownHandler, false);
-		this.document.addEventListener("keyup", this.keyUpHandler, false);
+		this.document.addEventListener("keydown", this.keyDownHandler.bind(this), false);
+		this.document.addEventListener("keyup", this.keyUpHandler.bind(this), false);
 	},
 
 	//Input Handling
