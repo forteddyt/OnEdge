@@ -24,16 +24,18 @@ Meteor.prototype = {
         this.draw();
         meteors.push(this)
     },
+    
     draw: function() {
         if(inCtxBounds(this.imgSprite, this.xPos, this.yPos, this.canvasCtx)){
-            ctx.drawImage(this.imgSprite, this.xPos, this.yPos)
+            ctx.drawImage(this.imgSprite, this.xPos, this.yPos);
+        }
+    },
 
+    update: function() {
+        if(inCtxBounds(this.imgSprite, this.xPos, this.yPos, this.canvasCtx)){
             this.xPos += this.dX
             this.yPos += this.dY
         }
-    },
-    update: function() {
-        this.draw()
     }
 }
 

@@ -112,14 +112,16 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     //draw
+    space.draw();
     player.drawChar(ctx);
     drawPlatform();
+
+    //draw UI elements
     drawScoreCounter();
 
     //update
     player.moveCharacter();
     space.update(frameCount);
-
     player.checkCollisions(meteors);
 
 	if (gameOver) {
