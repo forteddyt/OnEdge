@@ -92,7 +92,7 @@ function drawMeteors() {
 }
 
 function drawScoreCounter() {
-	var score = Math.floor(frameCount/5);
+	var score = Math.floor(frameCount/10);
 	ctx.font = "20px Monospace";
 	if (score == 100 || score == 500 || score == 1000 || score == 2000 || score == 5000) {
 		scoreFlashDuration = SCORE_FLASH_FRAMES;
