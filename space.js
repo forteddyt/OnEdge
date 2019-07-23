@@ -25,6 +25,11 @@ Space.prototype = {
         })
     },
     spawnMeteor: function(){
-        this.meteors.push(new Meteor(this.canvasCtx))
+        this.meteors.push(new Meteor(this.canvasCtx, this.instance_))
+    },
+    removeMeteor: function(targetMeteor){
+      this.meteors = this.meteors.filter(currentMeteor => {
+        return currentMeteor !== targetMeteor;
+      });
     }
 }
