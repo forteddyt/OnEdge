@@ -25,8 +25,6 @@ Space.prototype = {
         this.meteors.forEach(function(meteor){
             meteor.update();
         })
-
-        this.destroyMeteors();
     },
 
     draw : function(){
@@ -36,18 +34,13 @@ Space.prototype = {
     },
 
     spawnMeteor : function(){
-        this.meteors.push(new Meteor(this.canvasCtx))
+        this.meteors.push(new Meteor(this.canvasCtx, this.instance_))
     },
 
-    destroyMeteors : function() {
-        var i = 0;
-        while (true) {
-            if (this.meteors.length > i && this.meteors[i].yPos > canvas.height + 80) {//TODO FIGURE OUT IMAGE HEIGHT
-                this.meteors.splice(i,1);
-            } else if (i >= this.meteors.length) {
-                break;
-            } else {
-                i += 1;
+    removeMeteor: function(targetMeteor){
+        for (var i = 0; i < meteors.length; i++) {
+            if (meteors[i] === targetMeteor) {
+                meteors.splice(i,1);
             }
         }
     }
