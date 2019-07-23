@@ -10,27 +10,31 @@
 </head>
 <body>
 
-<canvas id="gameCanvas" width="480" height="320"></canvas>
-
+<canvas id="gameCanvas" width="600" height="300"></canvas>
+<script type="text/javascript" src="player.js"></script>
 <script>
+
 var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
-var charHeight = 30;
-var platformHeight = 10;
-var charWidth = 20;
-var meteorRad = 5;
-var platformWidth = canvas.width*2/3;
-var platformX = (canvas.width-platformWidth)/2; //left bound of the platform
-var charX = canvas.width / 2; //left bound of the character
-var rightPressed = false; //true iff right keyboard was pressed
-var leftPressed = false; //true iff left keyboard was pressed
+
+const Consts = {
+	charHeight : 30,
+	platformHeight : 10,
+	charWidth : 20,
+	meteorRadius : 10,
+	platformWidth : canvas.width*1/2,
+	platformX : (canvas.width-this.platformWidth)/2, /*left bound of the platform  */
+	charSpeed : 2, /*default movement speed of the player per frame */
+	meteorSpeed : 2, //default fall speed for meteors per frame */
+	interval : setInterval(draw, 10) //sets max framerate of the game */
+};
+
+const interval = setInterval(draw, 10);//sets max framerate of the game
+
 var meteors = []; //array of all meteors on screen
 var frameCount = 0; //ticker that increments each frame
 var gameOver = false; //true iff game player has lost
-var charSpeed = 2;//default movement speed of the player per frame
-var meteorSpeed = 1; //default fall speed for meteors per frame
-
-var interval = setInterval(draw, 10);//sets max framerate of the game
+var player = new Player(canvas, document);
 
 //animation
 var scoreFlashDuration = 0;
@@ -38,38 +42,10 @@ var scoreFlashValue = 0;
 const SCORE_FLASH_FRAMES = 240;
 const SCORE_FLASH_SPEED = 30;
 
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
-
-//Input Handling
-function keyDownHandler(e) {
-    if (e.key == "Right" || e.key == "ArrowRight") {
-        rightPressed = true;
-    } else if (e.key == "Left" || e.key == "ArrowLeft") {
-        leftPressed = true;
-    }
-}
-
-function keyUpHandler(e) {
-    if(e.key == "Right" || e.key == "ArrowRight") {
-        rightPressed = false;
-    } else if (e.key == "Left" || e.key == "ArrowLeft") {
-        leftPressed = false;
-    }
-}
-
 //Drawing
-function drawChar() {
-    ctx.beginPath();
-    ctx.rect(charX, canvas.height-charHeight-platformHeight, charWidth, charHeight);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
-}
-
 function drawPlatform() {
     ctx.beginPath();
-    ctx.rect(platformX, canvas.height-platformHeight, platformWidth, platformHeight);
+    ctx.rect(Consts.platformX, canvas.height-Consts.platformHeight, Consts.platformWidth, Consts.platformHeight);
     ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
@@ -78,7 +54,7 @@ function drawPlatform() {
 function drawMeteors() {
 	for (i = 0; i < meteors.length; i++) {
 	    ctx.beginPath();
-	    ctx.arc(meteors[i].x + meteorRad/2, meteors[i].y + meteorRad/2, meteorRad, 0, Math.PI*2);
+	    ctx.arc(meteors[i].x + Consts.meteorRadius/2, meteors[i].y + Consts.meteorRadius/2, Consts.meteorRadius, 0, Math.PI*2);
 	    ctx.fillStyle = "#0095DD";
 	    ctx.fill();
 	    ctx.closePath();
@@ -105,27 +81,19 @@ function drawScoreCounter() {
 
 //Game Controllers
 function spawnMeteor() {
-	var meteorX = Math.random()*(canvas.width - 2*meteorRad) + meteorRad;
-	meteors.push({x: meteorX, y: 0});
-}
-
-function moveCharacter() {
-	if (rightPressed && charX < canvas.width-charWidth) {
-        charX += charSpeed;
-    } else if (leftPressed && charX > 0) {
-        charX -= charSpeed;
-    }
+	var meteorX = Math.random()*(canvas.width - 2*Consts.meteorRadius) + Consts.meteorRadius;
+	meteors.push({x: meteorX, y: -Consts.meteorRadius});
 }
 
 function moveMeteors() {
 	for (i = 0; i < meteors.length; i++) {
-		meteors[i].y += meteorSpeed;
+		meteors[i].y += Consts.meteorSpeed;
 	}
 }
 
 function destroyMeteors() {
 	while (true) {
-		if (meteors.length > 0 && meteors[0].y > canvas.height + meteorRad * 2) {
+		if (meteors.length > 0 && meteors[0].y > canvas.height + Consts.meteorRadius * 2) {
 			meteors.shift();
 		} else {
 			break;
@@ -133,48 +101,36 @@ function destroyMeteors() {
 	}
 }
 
-function checkCollisions() {
-	for (i = 0; i < meteors.length; i++) {
-		if (charX < meteors[i].x &&
-			meteors[i].x < charX + charWidth &&
-			meteors[i].y >= canvas.height - (charHeight + platformHeight) && 
-			meteors[i].y < canvas.height - platformHeight) {
-			gameOver = true;
-		}
-	}
-}
 
-function performAnimations() {
-}
-
-function drawBackground() {
-}
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     //draw
-    drawChar();
+    player.drawChar(ctx);
     drawPlatform();
     drawMeteors();
     drawScoreCounter();
 
     //update
-    moveCharacter();
-    if (frameCount % 100 == 0) {
+    console.log(player.rightPressed + " inside index");
+    player.moveCharacter();
+    if (frameCount % 10 == 0) {
     	spawnMeteor();
     }
     moveMeteors();
     destroyMeteors();
-    checkCollisions();
+
+    player.checkCollisions(meteors);
 
 	if (gameOver) {
 		console.log("GAME OVER");
 		document.location.reload();
-		clearInterval(interval);
+		clearInterval(Consts.interval);
 	}
     
     frameCount++;
+
 }
 
 </script>
