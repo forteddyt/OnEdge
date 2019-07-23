@@ -21,6 +21,10 @@ var charWidth = 20;
 var meteorRad = 5;
 var platformWidth = canvas.width*2/3;
 var platformX = (canvas.width-platformWidth)/2; //left bound of the platform
+var buttonWidth = canvas.width*2/5;
+var buttonHeight = canvas.width/8;
+var gameOverWidth = canvas.width*3/4;
+var gameOverHeight = canvas.height/4;
 var charX = canvas.width / 2; //left bound of the character
 var rightPressed = false; //true iff right keyboard was pressed
 var leftPressed = false; //true iff left keyboard was pressed
@@ -40,6 +44,7 @@ const SCORE_FLASH_SPEED = 30;
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("click", onClickHandler, false);
 
 //Input Handling
 function keyDownHandler(e) {
@@ -58,6 +63,16 @@ function keyUpHandler(e) {
     }
 }
 
+function onClickHandler(e) {
+	if (gameOver) {
+		midWidth = canvas.width/2;
+		midHeight = canvas.height/2;
+		if (e.clientX > midWidth - buttonWidth/2 && e.clientX < midWidth + buttonWidth/2 && 
+		e.clientY > 3*midHeight/2 - buttonHeight*2/3 && e.clientY < 3*midHeight/2 + buttonHeight/3) {
+			document.location.reload();
+		}
+	}
+}
 //Drawing
 function drawChar() {
     ctx.beginPath();
@@ -148,6 +163,35 @@ function checkCollisions() {
 	}
 }
 
+function endGameGUI() {
+	var midWidth = canvas.width/2;
+	var midHeight = canvas.height/2;
+
+	//rect
+	ctx.beginPath();
+
+	ctx.rect(midWidth - buttonWidth/2, 3*midHeight/2 - buttonHeight*2/3, buttonWidth, buttonHeight);
+    ctx.fillStyle = "#e0e0e0";
+	ctx.fill();
+	ctx.strokeStyle =  "#b5b3b3";
+	ctx.stroke();
+
+	ctx.rect(midWidth - gameOverWidth/2, midHeight - gameOverHeight*2/3, gameOverWidth, gameOverHeight);
+    ctx.fillStyle = "#eee";
+	ctx.fill();
+
+	ctx.closePath();
+
+	//text
+	ctx.fillStyle = "#0095DD";
+	ctx.font = "bold 50px Monospace";
+	ctx.textAlign = "center";
+	ctx.fillText("GAME OVER", midWidth, midHeight);
+
+	ctx.font = "bold 30px Monospace";
+	ctx.fillText("PLAY AGAIN", midWidth, 3*midHeight/2);
+}
+
 function performAnimations() {
 }
 
@@ -173,8 +217,7 @@ function draw() {
     checkCollisions();
 
 	if (gameOver) {
-		console.log("GAME OVER");
-		document.location.reload();
+		endGameGUI();
 		clearInterval(interval);
 	}
     
