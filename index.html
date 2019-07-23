@@ -12,8 +12,6 @@
 
 <canvas id="gameCanvas" width="480" height="320"></canvas>
 
-
-
 <script>
 var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
@@ -32,7 +30,6 @@ var gameOver = false; //true iff game player has lost
 var charSpeed = 2;//default movement speed of the player per frame
 var meteorSpeed = 1; //default fall speed for meteors per frame
 
-
 var interval = setInterval(draw, 10);//sets max framerate of the game
 
 //animation
@@ -44,13 +41,11 @@ const SCORE_FLASH_SPEED = 30;
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
-
 //Input Handling
 function keyDownHandler(e) {
-    if(e.key == "Right" || e.key == "ArrowRight") {
+    if (e.key == "Right" || e.key == "ArrowRight") {
         rightPressed = true;
-    }
-    else if(e.key == "Left" || e.key == "ArrowLeft") {
+    } else if (e.key == "Left" || e.key == "ArrowLeft") {
         leftPressed = true;
     }
 }
@@ -58,8 +53,7 @@ function keyDownHandler(e) {
 function keyUpHandler(e) {
     if(e.key == "Right" || e.key == "ArrowRight") {
         rightPressed = false;
-    }
-    else if(e.key == "Left" || e.key == "ArrowLeft") {
+    } else if (e.key == "Left" || e.key == "ArrowLeft") {
         leftPressed = false;
     }
 }
@@ -98,6 +92,7 @@ function drawScoreCounter() {
 		scoreFlashDuration = SCORE_FLASH_FRAMES;
 		scoreFlashValue = score;
 	}
+
 	if (scoreFlashDuration > 0) {
 		scoreFlashDuration--;
 		if (Math.floor(scoreFlashDuration / SCORE_FLASH_SPEED) % 2 == 1) {
@@ -115,15 +110,10 @@ function spawnMeteor() {
 }
 
 function moveCharacter() {
-	if(rightPressed && charX < canvas.width-charWidth) {
+	if (rightPressed && charX < canvas.width-charWidth) {
         charX += charSpeed;
-    }
-    else if(leftPressed && charX > 0) {
+    } else if (leftPressed && charX > 0) {
         charX -= charSpeed;
-    }
-
-    if (frameCount % 100 == 0) {
-    	spawnMeteor();
     }
 }
 
@@ -163,15 +153,19 @@ function drawBackground() {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    //draw
     drawChar();
     drawPlatform();
     drawMeteors();
     drawScoreCounter();
 
+    //update
     moveCharacter();
+    if (frameCount % 100 == 0) {
+    	spawnMeteor();
+    }
     moveMeteors();
     destroyMeteors();
-
     checkCollisions();
 
 	if (gameOver) {
