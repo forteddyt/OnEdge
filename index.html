@@ -52,11 +52,15 @@ function keyDownHandler(e) {
         rightPressed = true;
     } else if (e.key == "Left" || e.key == "ArrowLeft") {
         leftPressed = true;
-    }
+    } else if (gameOver) {
+		//any key except left and right can restart game, since user
+		//will most likely be pressing down these keys when they die anyway
+		restartGame();
+	}
 }
 
 function keyUpHandler(e) {
-    if(e.key == "Right" || e.key == "ArrowRight") {
+    if (e.key == "Right" || e.key == "ArrowRight") {
         rightPressed = false;
     } else if (e.key == "Left" || e.key == "ArrowLeft") {
         leftPressed = false;
@@ -69,7 +73,7 @@ function onClickHandler(e) {
 		midHeight = canvas.height/2;
 		if (e.clientX > midWidth - buttonWidth/2 && e.clientX < midWidth + buttonWidth/2 && 
 		e.clientY > 3*midHeight/2 - buttonHeight*2/3 && e.clientY < 3*midHeight/2 + buttonHeight/3) {
-			document.location.reload();
+			restartGame();
 		}
 	}
 }
@@ -190,6 +194,10 @@ function endGameGUI() {
 
 	ctx.font = "bold 30px Monospace";
 	ctx.fillText("PLAY AGAIN", midWidth, 3*midHeight/2);
+}
+
+function restartGame() {
+	document.location.reload();
 }
 
 function performAnimations() {
