@@ -3,10 +3,7 @@ function Space(canvasCtx){
     if(Space.instance_){
         return Space.instance_;
     }
-
     this.canvasCtx = canvasCtx
-    this.lastSpawnTime = 0;
-
     this.meteors = [];
 
     this.instance_ = this;
@@ -18,10 +15,9 @@ Space.prototype = {
         this.time = 0;
         this.update()
     },
-    update: function(runningTime){
-        if(runningTime - this.lastSpawnTime > 750) {
-            this.spawnMeteor()
-            this.lastSpawnTime = runningTime;
+    update: function(frameCount){
+        if(frameCount % 20 == 0) {
+            this.spawnMeteor();
         }
 
         this.meteors.forEach(function(meteor){

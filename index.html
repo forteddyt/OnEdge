@@ -11,9 +11,125 @@
 <body>
 <canvas id="gameCanvas" width="480" height="320"></canvas>
 
+<script src="player.js"></script>
 <script src="meteor.js"></script>
-<script src="game.js"></script>
 <script src="space.js"></script>
+<script>
 
+var canvas = document.getElementById("gameCanvas");
+var ctx = canvas.getContext("2d");
+var space = new Space(ctx);
 
+const Consts = {
+	charHeight : 30,
+	platformHeight : 10,
+	charWidth : 20,
+	meteorRadius : 10,
+	platformWidth : canvas.width*1/2,
+	platformX : (canvas.width-canvas.width*1/2)/2, /*left bound of the platform  */
+	charSpeed : 2, /*default movement speed of the player per frame */
+	meteorSpeed : 2, //default fall speed for meteors per frame */
+	interval : setInterval(draw, 10), //sets max framerate of the game */
+	buttonWidth : canvas.width*2/5,
+	buttonHeight : canvas.width/8,
+	gameOverWidth : canvas.width*3/4,
+	gameOverHeight : canvas.height/4,
+	meteorSpawnRate : 5,
+};
+
+const interval = setInterval(draw, 10);//sets max framerate of the game
+
+var meteors = []; //array of all meteors on screen
+var frameCount = 0; //ticker that increments each frame
+var gameOver = false; //true iff game player has lost
+var player = new Player(canvas, document);
+
+//animation
+var scoreFlashDuration = 0;
+var scoreFlashValue = 0;
+const SCORE_FLASH_FRAMES = 240;
+const SCORE_FLASH_SPEED = 30;
+
+//Drawing
+function drawPlatform() {
+    ctx.beginPath();
+    ctx.rect(Consts.platformX, canvas.height-Consts.platformHeight, Consts.platformWidth, Consts.platformHeight);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
+}
+
+function drawScoreCounter() {
+	var score = Math.floor(frameCount/10);
+	ctx.font = "20px Monospace";
+	if (score == 100 || score == 500 || score == 1000 || score == 2000 || score == 5000) {
+		scoreFlashDuration = SCORE_FLASH_FRAMES;
+		scoreFlashValue = score;
+	}
+
+	if (scoreFlashDuration > 0) {
+		scoreFlashDuration--;
+		if (Math.floor(scoreFlashDuration / SCORE_FLASH_SPEED) % 2 == 1) {
+			ctx.fillText(scoreFlashValue, 10, 20);
+		}
+	} else {
+		ctx.fillText(score, 10, 20);
+	}
+}
+
+//Game Controllers
+
+function endGameGUI() {
+	var midWidth = canvas.width/2;
+	var midHeight = canvas.height/2;
+
+	//rect
+	ctx.beginPath();
+
+	ctx.rect(midWidth - buttonWidth/2, 3*midHeight/2 - buttonHeight*2/3, buttonWidth, buttonHeight);
+    ctx.fillStyle = "#e0e0e0";
+	ctx.fill();
+	ctx.strokeStyle =  "#b5b3b3";
+	ctx.stroke();
+
+	ctx.rect(midWidth - gameOverWidth/2, midHeight - gameOverHeight*2/3, gameOverWidth, gameOverHeight);
+    ctx.fillStyle = "#eee";
+	ctx.fill();
+
+	ctx.closePath();
+
+	//text
+	ctx.fillStyle = "#0095DD";
+	ctx.font = "bold 50px Monospace";
+	ctx.textAlign = "center";
+	ctx.fillText("GAME OVER", midWidth, midHeight);
+
+	ctx.font = "bold 30px Monospace";
+	ctx.fillText("PLAY AGAIN", midWidth, 3*midHeight/2);
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    //draw
+    player.drawChar(ctx);
+    drawPlatform();
+    drawScoreCounter();
+
+    //update
+    player.moveCharacter();
+    space.update(frameCount);
+
+    player.checkCollisions(meteors);
+
+	if (gameOver) {
+		endGameGUI();
+		clearInterval(interval);
+	}
+    
+    frameCount++;
+
+}
+
+</script>
 
