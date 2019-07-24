@@ -22,9 +22,9 @@ Platform.prototype = {
         this.canvas = this.canvasCtx.canvas
 
         this.platformHeight = 10        
-        this.platformWidth = this.canvas.width * 1 / 2
+        this.platformWidth = this.canvas.width * 3 / 5
 
-        this.platformX =  (this.canvas.width - this.canvas.width * 1 / 2) / 2 /*left bound of the platform  */
+        this.platformX =  (this.canvas.width - this.platformWidth) / 2 /*left bound of the platform  */
     },
     draw: function(){
         this.canvasCtx.beginPath();
