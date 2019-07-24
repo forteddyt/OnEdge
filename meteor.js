@@ -1,5 +1,5 @@
 MeteorImg = new Image();
-MeteorImg.src = 'images/asteroid-png-8-bit.png'
+MeteorImg.src = 'images/meteor.png'
 meteors = new Array()
 
 function Meteor(canvasCtx, space){
@@ -8,9 +8,14 @@ function Meteor(canvasCtx, space){
     this.yPos = 0;
     this.dX = 0;
     this.dY = 0;
-    this.imgSprite = null;
-    this.space = space;
 
+    this.nImage = 0;
+    this.imgWidth = 40;
+    this.imgHeight = 60;
+
+    this.frameCount = 0;
+    this.frameLoopCycle = 15;
+    this.space = space;
     this.init()
 }
 
@@ -28,7 +33,14 @@ Meteor.prototype = {
     
     draw: function() {
         if(inCtxBounds(this.imgSprite, this.xPos, this.yPos, this.canvasCtx)){
-            ctx.drawImage(this.imgSprite, this.xPos, this.yPos);
+            this.canvasCtx.drawImage(MeteorImg, this.nImage * this.imgWidth, 0, this.imgWidth, this.imgHeight, this.xPos, this.yPos, this.imgWidth, this.imgHeight);
+            if (this.frameCount > this.frameLoopCycle) {
+                this.nImage++;
+                this.frameCount = 0;
+            }
+            if (this.nImage > 3) {
+              this.nImage = 0;
+            }
         }
     },
 

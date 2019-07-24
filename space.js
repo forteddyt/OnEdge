@@ -40,7 +40,7 @@ Space.prototype = {
     removeMeteor: function(targetMeteor){
         for (var i = 0; i < meteors.length; i++) {
             if (meteors[i] === targetMeteor) {
-                meteors.splice(i,1);
+                meteors.splice(i, 1);
             }
         }
     }
