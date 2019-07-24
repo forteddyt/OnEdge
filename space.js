@@ -10,8 +10,8 @@ function Space(game){
     if(Space.instance_){
         return Space.instance_;
     }
-    this.Game = game
-    this.canvasCtx = null
+    this.Game = game;
+    this.canvasCtx = null;
     this.meteors = [];
     this.stars = [];
     this.previousMeteorX = 0;
@@ -27,7 +27,7 @@ Space.prototype = {
     init: function(){
         this.canvasCtx = this.Game.canvasCtx
         this.time = 0;
-        this.update()
+        this.update();
     },
     update : function(frameCount){
         
@@ -88,7 +88,7 @@ Space.prototype = {
 
     shouldSpawnMeteor: function(frameCount){
         //spawn rate of meteors increases asymptotically with time
-        var invFreq = Math.ceil(10 + 40/((frameCount + 1500)/1500));
+        var invFreq = Math.ceil(10 + 35/((frameCount + 1200)/1200));
         if (frameCount % invFreq == 0) {
             return true;
         } else {
@@ -108,15 +108,27 @@ Space.prototype = {
     spawnMeteor : function(frameCount){
         var rand = Math.random();
         if (frameCount < 1000) {
-            this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
+            if (rand < 0.4) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -2, this.previousMeteorX));
+            } else {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
+            }
         } else if (frameCount < 3000) {
-            if (rand < 0.5) {
+            if (rand < 0.2) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -2, this.previousMeteorX));
+            } else if (rand < 0.4) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -1, this.previousMeteorX));
+            } else if (rand < 0.6) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
             } else {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 1, this.previousMeteorX));
             }
         } else if (frameCount < 5000) {
-            if (rand < 0.4) {
+            if (rand < 0.2) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -2, this.previousMeteorX));
+            } else if (rand < 0.3) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -1, this.previousMeteorX));
+            } else if (rand < 0.5) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
             } else if (rand < 0.8) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 1, this.previousMeteorX));
@@ -124,7 +136,9 @@ Space.prototype = {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 2, this.previousMeteorX));
             }
         } else if (frameCount < 7000) {
-            if (rand < 0.25) {
+            if (rand < 0.07) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -1, this.previousMeteorX));
+            } else if (rand < 0.25) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
             } else if (rand < 0.5) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 1, this.previousMeteorX));

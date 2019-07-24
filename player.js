@@ -28,8 +28,8 @@ function Player(game) {
 	this.frameCount = 0;
 	this.frameLoopCycle = 5;
 	this.facingRight = false; 
-	this.charWidth = 32
-	this.charHeight = 58
+	this.charWidth = 32;
+	this.charHeight = 58;
 	this.charSpeed = 3, /*default movement speed of the player per frame */
 
 	this.init();
