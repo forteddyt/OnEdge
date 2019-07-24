@@ -1,3 +1,8 @@
+AstronautImgRight = new Image(); 
+AstronautImgRight.src = 'images/astronautright.png'
+AstronautImgLeft = new Image(); 
+AstronautImgLeft.src = 'images/astronautleft.png'
+
 function Player(game) {
 	// Singleton
     if(Player.instance_){
@@ -17,8 +22,12 @@ function Player(game) {
 	this.leftPressed = false; //true iff left keyboard was pressed
 	this.document = document;
 
-	this.charWidth = 20
-	this.charHeight = 30
+	this.nImage = 0;
+	this.frameCount = 0;
+	this.frameLoopCycle = 5;
+	this.facingRight = false; 
+	this.charWidth = 32
+	this.charHeight = 58
 	this.charSpeed = 3, /*default movement speed of the player per frame */
 
 	this.init();
@@ -122,10 +131,33 @@ Player.prototype = {
 	},
 
 	drawChar : function() {
-    	this.canvasCtx.beginPath();
-    	this.canvasCtx.rect(this.charX, this.charY, this.charWidth, this.charHeight);
-    	this.canvasCtx.fillStyle = "#0095DD";
-    	this.canvasCtx.fill();
-    	this.canvasCtx.closePath();
+    	// this.canvasCtx.beginPath();
+    	// this.canvasCtx.rect(this.charX, this.charY, this.charWidth, this.charHeight);
+    	// this.canvasCtx.fillStyle = "#0095DD";
+    	// this.canvasCtx.fill();
+		// this.canvasCtx.closePath();
+		
+		if (this.rightPressed){
+			this.canvasCtx.drawImage(AstronautImgRight, this.nImage * this.charWidth, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
+			this.facingRight = true; 
+		}
+		else if (this.leftPressed){
+			this.canvasCtx.drawImage(AstronautImgLeft, this.nImage * this.charWidth, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
+			this.facingRight = false; 
+		}
+		else if (this.facingRight){
+			this.canvasCtx.drawImage(AstronautImgRight, this.charWidth, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
+		}
+		else{
+			this.canvasCtx.drawImage(AstronautImgLeft, this.charWidth, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
+		}
+
+		if (this.frameCount % this.frameLoopCycle == 0) {
+            this.nImage++;
+        }
+        if (this.nImage > 3) {
+            this.nImage = 0;
+		}
+		this.frameCount++; 
 	}
 };
