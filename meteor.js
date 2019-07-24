@@ -2,12 +2,14 @@ MeteorImg = new Image();
 MeteorImg.src = 'images/meteor.png'
 meteors = new Array()
 
-function Meteor(canvasCtx, space){
+function Meteor(canvasCtx, space, type, prevX){
     this.canvasCtx = canvasCtx
     this.xPos = 0;
     this.yPos = 0;
     this.dX = 0;
     this.dY = 0;
+    this.type = type;
+    this.prevX = prevX;
 
     this.nImage = 0;
     this.imgWidth = 40;
@@ -22,10 +24,31 @@ function Meteor(canvasCtx, space){
 Meteor.prototype = {
     init: function() {
         this.imgSprite = MeteorImg;
-        this.xPos = Math.floor(Math.random() * (this.canvasCtx.canvas.width - 10) + 5);
+
+        //prevent 2 meteors from spawning together and make spawn distribution pseudo triangular with mean at center
+        while (Math.abs(this.xPos - this.prevX) < 25 || this.xPos == 0) {
+            this.xPos = Math.floor(Math.random() * (this.canvasCtx.canvas.width - 10) + 5);
+            var xBias = Math.random() * (this.canvasCtx.canvas.width/4);
+            this.xPos += this.xPos > this.canvasCtx.canvas.width/2 ? -xBias : xBias;
+        }  
+
         this.yPos = -this.imgSprite.height - 10; // Meteor should start off of the screen
-        this.dX = Math.random() * 1.5 - .75;
-        this.dY = Math.random() * 3;
+        if (this.type == 0) {
+            this.dX = 0;
+            this.dY = 1.5;
+        } else if (this.type == 1) {
+            this.dX = 0;
+            this.dY = 3;
+        } else if (this.type == 2) {
+            this.dX = 0;
+            this.dY = 4.5;
+        } else if (this.type == 3) {
+            console.log("this is intense!");
+            this.dX = Math.random() > 0.5 ? -1.5 : 1.5;
+            this.dY = 3;
+        }
+        //this.dX = Math.random() * 1.5 - .75;
+        //this.dY = Math.random() * 3;
         this.radius = this.imgWidth/4;
         this.draw();
         meteors.push(this)
