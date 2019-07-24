@@ -29,10 +29,10 @@ function Game(canvasCtx){
 
 Game.prototype = {
     init : function() {
+        this.Score = new Score(this.instance_)
         this.Space = new Space(this.instance_)
         this.Platform = new Platform(this.instance_)
         this.Player = new Player(this.instance_)
-        this.Score = new Score(this.instance_)
 
         // setInterval(() => {console.log(this.frames)}, 1000)
         this.update();        
@@ -47,6 +47,7 @@ Game.prototype = {
         this.Player.update()
         this.Score.update(this.frames)
         
+            this.frames += 1;
         if (!this.gameOver) {
             var now = getTimeStamp();
             var deltaTime = now - (this.time || now);
@@ -54,7 +55,6 @@ Game.prototype = {
             this.time = now;
             this.runningTime += deltaTime
 
-            this.frames += 1;
         }
         else {
             this.Player.drawDeadChar()
