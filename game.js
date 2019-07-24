@@ -102,6 +102,9 @@ Game.prototype = {
 
         this.canvasCtx.font = "bold 30px Monospace";
         this.canvasCtx.fillText("PLAY AGAIN", midWidth, 3*midHeight/2);
+
+        //character
+        this.Player.drawDeadChar(); 
     }
 
 }

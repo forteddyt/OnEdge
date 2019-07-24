@@ -30,23 +30,22 @@ Meteor.prototype = {
             this.xPos = Math.floor(Math.random() * (this.canvasCtx.canvas.width - 10) + 5);
             var xBias = Math.random() * (this.canvasCtx.canvas.width/4);
             this.xPos += this.xPos > this.canvasCtx.canvas.width/2 ? -xBias : xBias;
-            //console.log(" " + this.xPos + " " + xBias);
-        }   
-        //console.log("final: " + this.xPos);
+        }  
 
         this.yPos = -this.imgSprite.height - 10; // Meteor should start off of the screen
         if (this.type == 0) {
             this.dX = 0;
-            this.dY = 2;
+            this.dY = 1.5;
         } else if (this.type == 1) {
             this.dX = 0;
-            this.dY = 4;
+            this.dY = 3;
         } else if (this.type == 2) {
             this.dX = 0;
-            this.dY = 5.5;
+            this.dY = 4.5;
         } else if (this.type == 3) {
-            this.dX = -1.5;
-            this.dY = 2;
+            console.log("this is intense!");
+            this.dX = Math.random() > 0.5 ? -1.5 : 1.5;
+            this.dY = 3;
         }
         //this.dX = Math.random() * 1.5 - .75;
         //this.dY = Math.random() * 3;

@@ -21,7 +21,6 @@ Space.prototype = {
     update : function(frameCount){
         if(this.shouldSpawnMeteor(frameCount)) {
             this.spawnMeteor(frameCount);
-            //console.log(frameCount);
         }
 
         this.meteors.forEach(function(meteor){
@@ -37,9 +36,8 @@ Space.prototype = {
 
     shouldSpawnMeteor: function(frameCount){
         //spawn rate of meteors increases asymptotically with time
-        var invFreq = Math.ceil(2 + 50/((frameCount + 1000)/1000));
+        var invFreq = Math.ceil(10 + 50/((frameCount + 1500)/1500));
         if (frameCount % invFreq == 0) {
-            //console.log("true on " + frameCount);
             return true;
         } else {
             return false;
@@ -56,7 +54,7 @@ Space.prototype = {
             } else {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 1, this.previousMeteorX));
             }
-        } else if (frameCount < 6000) {
+        } else if (frameCount < 5000) {
             if (rand < 0.4) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
             } else if (rand < 0.8) {
@@ -64,7 +62,7 @@ Space.prototype = {
             } else {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 2, this.previousMeteorX));
             }
-        } else if (frameCount < 10000) {
+        } else if (frameCount < 7000) {
             if (rand < 0.25) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
             } else if (rand < 0.5) {
@@ -78,7 +76,6 @@ Space.prototype = {
             this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0));
         }
         this.previousMeteorX = this.meteors[this.meteors.length-1].xPos;
-        //console.log(this.previousMeteorX);
     },
 
     removeMeteor: function(targetMeteor){
