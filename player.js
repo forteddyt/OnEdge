@@ -1,18 +1,37 @@
+function Player(game) {
+	// Singleton
+    if(Player.instance_){
+        return Player.instance_
+	}
+	this.instance_ = this
+	this.Game = game;
+	this.Space = null;
+	this.Platform = null;
 
-
-
-function Player(canvas, document) {
-
-	this.canvas = canvas;
-	this.charX = canvas.width / 2; //left bound of the character
+	this.canvasCtx = null;
+	this.canvas = null;
+	
+	this.charX = 0; //left bound of the character
 	this.rightPressed = false; //true iff right keyboard was pressed
 	this.leftPressed = false; //true iff left keyboard was pressed
 	this.document = document;
+
+	this.charWidth = 20
+	this.charHeight = 30
+	this.charSpeed = 3, /*default movement speed of the player per frame */
+
 	this.init();
 }
 
 Player.prototype = {
 	init: function(){
+		this.space = this.Game.Space
+		this.Platform = this.Game.Platform
+
+		this.canvasCtx = this.Game.canvasCtx
+		this.canvas = this.canvasCtx.canvas;
+		this.charX = this.canvas.width / 2; //left bound of the character
+
 		this.document.addEventListener("keydown", this.keyDownHandler.bind(this), false);
 		this.document.addEventListener("keyup", this.keyUpHandler.bind(this), false);
 	},
@@ -35,34 +54,37 @@ Player.prototype = {
 	    }
 	},
 
-	moveCharacter : function() {
-		if (this.rightPressed && this.charX < this.canvas.width-Consts.charWidth) {
-	        this.charX += Consts.charSpeed;
+	update : function() {
+		if (this.rightPressed && this.charX < this.canvas.width-this.charWidth) {
+	        this.charX += this.charSpeed;
 	    } else if (this.leftPressed && this.charX > 0) {
-	        this.charX -= Consts.charSpeed;
-	    }
+	        this.charX -= this.charSpeed;
+		}
+		this.checkCollisions(this.space.meteors)
+
+		this.drawChar();
 	},
 
 	checkCollisions : function(meteors) {
 		for (i = 0; i < meteors.length; i++) {
-			if (this.charX < meteors[i].x &&
-				meteors[i].x < this.charX + Consts.charWidth &&
-				meteors[i].y >= canvas.height - (Consts.charHeight + Consts.platformHeight) && 
-				meteors[i].y < canvas.height - Consts.platformHeight) {
+			if (this.charX < meteors[i].xPos &&
+				meteors[i].xPos < this.charX + this.charWidth &&
+				meteors[i].yPos >= canvas.height - (this.charHeight + this.Platform.platformHeight) && 
+				meteors[i].yPos < canvas.height - this.Platform.platformHeight) {
 				return true;
 			}
 		}
-		if (this.charX + this.charWidth < this.platformX || this.charX > this.platformX + this.platformWidth) {
+		if (this.charX + this.charWidth < this.Platform.platformX || this.charX > this.Platform.platformX + this.Platform.platformWidth) {
 			return true;
 		}
 		return false;
 	},
 
-	drawChar : function(ctx) {
-    	ctx.beginPath();
-    	ctx.rect(this.charX, this.canvas.height-Consts.charHeight-Consts.platformHeight, Consts.charWidth, Consts.charHeight);
-    	ctx.fillStyle = "#0095DD";
-    	ctx.fill();
-    	ctx.closePath();
+	drawChar : function() {
+    	this.canvasCtx.beginPath();
+    	this.canvasCtx.rect(this.charX, this.canvas.height-this.charHeight-this.Platform.platformHeight, this.charWidth, this.charHeight);
+    	this.canvasCtx.fillStyle = "#0095DD";
+    	this.canvasCtx.fill();
+    	this.canvasCtx.closePath();
 	}
 };

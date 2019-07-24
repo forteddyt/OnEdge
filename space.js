@@ -1,11 +1,10 @@
-//TODO: import {MeteorImg} from 'meteor.js'
-
-function Space(canvasCtx){
+function Space(game){
     // Singleton
     if(Space.instance_){
         return Space.instance_;
     }
-    this.canvasCtx = canvasCtx
+    this.Game = game
+    this.canvasCtx = null
     this.meteors = [];
 
     this.instance_ = this;
@@ -13,7 +12,8 @@ function Space(canvasCtx){
 }
 
 Space.prototype = {
-    init : function(){
+    init: function(){
+        this.canvasCtx = this.Game.canvasCtx
         this.time = 0;
         this.update()
     },
