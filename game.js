@@ -27,14 +27,14 @@ function Game(canvasCtx){
 }
 
 Game.prototype = {
-    init: function(){
+    init : function() {
         this.Space = new Space(this.instance_)
         this.Platform = new Platform(this.instance_)
         this.Player = new Player(this.instance_)
         this.Score = new Score(this.instance_)
 
         // setInterval(() => {console.log(this.frames)}, 1000)
-        this.update();
+        this.update();        
     },
     update: function(){
         this.updatePending = false;
@@ -68,16 +68,19 @@ Game.prototype = {
     clearCanvas: function() {
         this.canvasCtx.clearRect(0, 0, this.canvasCtx.canvas.width, this.canvasCtx.canvas.height);
     },
+    restartGame: function() {
+        //todo     
+    },
     //Game Controllers
 
     endGameGUI: function() {
         var canvas = this.canvasCtx.canvas
         var midWidth = canvas.width/2;
         var midHeight = canvas.height/2;
-        var buttonWidth = canvas.width*2/5
-        var buttonHeight = canvas.width/8
-        var gameOverWidth = canvas.width*3/4
-        var gameOverHeight = canvas.height/4
+        var buttonWidth = canvas.width*2/5;
+        var buttonHeight = canvas.width/8;
+        var gameOverWidth = canvas.width*3/4;
+        var gameOverHeight = canvas.height/4;
 
         //rect
         this.canvasCtx.beginPath();
