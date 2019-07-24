@@ -22,7 +22,7 @@ function Game(canvasCtx){
     this.Player = null;
     this.Score = null;
     this.gameOver = false;
-    this.keyUp = false;
+    this.keyUp = true;
 
     this.init()
 }

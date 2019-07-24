@@ -33,19 +33,38 @@ Space.prototype = {
         this.previousMeteorX = 0;
     },
     update : function(frameCount){
-        this.canvasCtx.drawImage(PlanetImg, 0, 0, this.planetSize, this.planetSize, 270, 40, this.planetSize, this.planetSize);
         
-        this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 30, 40, this.star1Size * 0.8, this.star1Size * 0.8)
-        this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 150, 20, this.star1Size * 0.8, this.star1Size * 0.8)
-        this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 220, 70, this.star1Size * 0.8, this.star1Size * 0.8)
-        this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 40, 200, this.star1Size * 0.8, this.star1Size * 0.8)
-        this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 170, 180, this.star1Size * 0.8, this.star1Size * 0.8)
-        this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 400, 240, this.star1Size * 0.8, this.star1Size * 0.8)
+        if (frameCount > 500) {
+            this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 30, 40, this.star1Size * 0.8, this.star1Size * 0.8)
+        }
+        if (frameCount > 1000) {
+            this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 150, 20, this.star1Size * 0.8, this.star1Size * 0.8)
+        }
+        if (frameCount > 1500) {
+            this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 220, 70, this.star1Size * 0.8, this.star1Size * 0.8)
+        }
+        if (frameCount > 2000) {
+            this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 40, 200, this.star1Size * 0.8, this.star1Size * 0.8)
+        }
+        if (frameCount > 2500) {
+            this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 170, 180, this.star1Size * 0.8, this.star1Size * 0.8)
+        }
+        if (frameCount > 3000) {
+            this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 420, 40, this.star2Size * 0.75, this.star2Size * 0.75)
+        }
+        if (frameCount > 3500) {
+            this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 80, 100, this.star2Size * 0.75, this.star2Size * 0.75)
+        }
+        if (frameCount > 4000) {
+            this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 300, 200, this.star2Size * 0.75, this.star2Size * 0.75)
+        }
+        if (frameCount > 4500) {
+            this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 400, 240, this.star1Size * 0.8, this.star1Size * 0.8)
+        }
+        if (frameCount > 5000) {
+            this.canvasCtx.drawImage(PlanetImg, 0, 0, this.planetSize, this.planetSize, 270, 40, this.planetSize, this.planetSize);
+        }
 
-        this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 420, 40, this.star2Size * 0.75, this.star2Size * 0.75)
-        this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 80, 100, this.star2Size * 0.75, this.star2Size * 0.75)
-        this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 300, 200, this.star2Size * 0.75, this.star2Size * 0.75)
-        this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 100, 230, this.star2Size * 0.75, this.star2Size * 0.75)
 
         
         if(this.shouldSpawnMeteor(frameCount)) {
@@ -59,7 +78,6 @@ Space.prototype = {
         this.meteors.forEach(function(meteor){
             meteor.update(frameCount);
         })
-
         this.stars.forEach(function(star){
             star.update(frameCount);
         })
@@ -143,18 +161,27 @@ Space.prototype = {
         }
     },
 
+    removeMeteors: function(){
+        this.meteors = [];
+        console.log("should remove");
+    },
+
+    removeStars: function(){
+        this.stars = [];
+    },
+
     removeMeteor: function(targetMeteor){
-        for (var i = 0; i < meteors.length; i++) {
-            if (meteors[i] === targetMeteor) {
-                meteors.splice(i, 1);
+        for (var i = 0; i < this.meteors.length; i++) {
+            if (this.meteors[i] === targetMeteor) {
+                this.meteors.splice(i, 1);
             }
         } 
     },
 
     removeStar: function(targetStar){
-        for (var i = 0; i < stars.length; i++) {
-            if (stars[i] === targetStar) {
-                stars.splice(i, 1);
+        for (var i = 0; i < this.stars.length; i++) {
+            if (this.stars[i] === targetStar) {
+                this.stars.splice(i, 1);
             }
         }
     },

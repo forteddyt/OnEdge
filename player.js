@@ -84,6 +84,14 @@ Player.prototype = {
 	    } else if (this.leftPressed && this.charX > 0) {
 	        this.charX -= this.charSpeed;
 		}
+
+		if(this.checkCollisions(this.space.stars, false)){
+			this.space.removeMeteors();
+			this.space.removeStars();
+			this.Game.Score.bonus += 100;
+			console.log("extra points");
+		}
+
 		if (!this.Game.gameOver){
 			this.Game.gameOver = this.checkCollisions(this.space.meteors);
 		}
@@ -101,9 +109,9 @@ Player.prototype = {
 	
 		var distance=Math.sqrt( Math.pow( Obj2Center[0]-Obj1Center[0], 2)  + Math.pow( Obj2Center[1]-Obj1Center[1], 2) );
 		if(distance <= obj1.r+obj2.r){
-			console.log("distance: " + distance + " < " + (obj1.r+obj2.r));
+			//console.log("distance: " + distance + " < " + (obj1.r+obj2.r));
 			return true;
-			console.log("circle touch");
+			//console.log("circle touch");
 		}
 		else{
 			return false;
@@ -116,24 +124,47 @@ Player.prototype = {
 		var rect={x:x1+i2, y:y1+0.8*i2, w:7*w1/16, h:h1-0.9*i2};
 
 		var distX = Math.abs(circle2.x - rect.x-rect.w/2);
-    	var distY = Math.abs(circle2.y - rect.y-rect.h/2);
+		var distY = Math.abs(circle2.y - rect.y-rect.h/2);
+		// this.canvasCtx.beginPath();
+		// this.canvasCtx.arc(circle2.x, circle2.y, circle2.r, 0, 2*Math.PI);
+		// this.canvasCtx.strokeStyle =  "blue";
+        // this.canvasCtx.stroke();
+		// this.canvasCtx.closePath();
+
+		// this.canvasCtx.beginPath();
+		// this.canvasCtx.arc(circle1.x, circle1.y, circle1.r, 0, 2*Math.PI);
+		// this.canvasCtx.strokeStyle =  "blue";
+        // this.canvasCtx.stroke();
+		// this.canvasCtx.closePath();
+
+		// this.canvasCtx.beginPath();
+		// this.canvasCtx.rect(rect.x, rect.y, rect.w, rect.h);
+		// this.canvasCtx.stroke();
+		// this.canvasCtx.closePath();
 		if(this.getTouch(circle1, circle2)){
 			return true;
 		}
 		var dx=distX-rect.w/2;
 		var dy=distY-rect.h/2;
 		return (dx*dx+dy*dy<=(circle2.r*circle2.r));
-
-		//TODO figure out the bounding box issues with the meteors
 	},
 
-	checkCollisions : function(meteors) {
+	checkCollisions : function(meteors, ismeteor) {
 		for (i = 0; i < meteors.length; i++) {
 			//console.log("x= "+ meteors[i].xPos + " y=" + meteors[i].yPos);
-			var radius = (meteors[i].imgWidth/4);
-			var xcircle = meteors[i].xPos + radius;
-			var ycircle = meteors[i].yPos + meteors[i].imgHeight - (3*radius);
-
+			var radius = 0;
+			var ycircle = 0;
+			var xcircle = 0;
+			if(ismeteor){
+				radius = (meteors[i].imgWidth/4);
+				ycircle = meteors[i].yPos + meteors[i].imgHeight - (3*radius);
+				xcircle = meteors[i].xPos + radius;
+			}
+			else{
+				radius = meteors[i].imgWidth/2;
+				ycircle = meteors[i].yPos;
+				xcircle = meteors[i].xPos;
+			}
 			var indent = 3*this.charWidth/32;
 			var astroRadius = 13*this.charWidth/32;
 			var rectIndent = 9*this.charWidth/32;
