@@ -36,7 +36,7 @@ function onClickHandler(evt) {
 		var buttonHeight = canvas.width/8;
 
 		if (evt.layerX > midWidth - buttonWidth/2 && evt.layerX < midWidth + buttonWidth/2 && 
-		evt.layerY > 3*midHeight/2 - buttonHeight*2/3 && evt.layerY < 3*midHeight/2 + buttonHeight/3) {
+		evt.layerY > 5 * midHeight / 4 - buttonHeight*2/3 && evt.layerY <5 * midHeight / 4 + buttonHeight/3) {
 			restartGame();
 		}
 	}
@@ -63,7 +63,6 @@ function onKeyUpHandler(evt) {
 }
 
 function restartGame() {
-	console.log("YE")
 	game.restart();
 }
 

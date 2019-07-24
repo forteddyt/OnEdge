@@ -11,6 +11,8 @@ function Score(game){
     this.SCORE_FLASH_SPEED = 30;
 
     this.score = 0;
+    this.highScore = 0;
+    this.bonus = 0;
     this.init()
 }
 
@@ -20,9 +22,10 @@ Score.prototype = {
         this.canvas = this.canvasCtx.canvas
         
         this.score = 0;
+        this.bonus = 0;
     },
     draw: function(frameCount){
-        this.score = Math.floor(frameCount/10);
+        this.score = this.bonus + Math.floor(frameCount/10);
         this.canvasCtx.font = "20px Monospace";
         this.canvasCtx.fillStyle = "black";
         this.canvasCtx.textAlign = "left";
@@ -43,11 +46,18 @@ Score.prototype = {
                 this.canvasCtx.fillText(this.score, 10, 20);
             }
         }
+        this.canvasCtx.textAlign = "right";
+        this.canvasCtx.fillText("HI " + this.highScore, canvas.width - 10, 20)
     },
     update: function(frameCount){
         this.draw(frameCount)
     },
     reset: function(){
         this.init()
+    },
+    updateHighScore: function() {
+        if (this.score > this.highScore) {
+            this.highScore = this.score;
+        }
     }
 }
