@@ -39,10 +39,17 @@ Meteor.prototype = {
         this.yPos = -this.imgSprite.height - 10; // Meteor should start off of the screen
         if (this.type == 0) {
             this.dX = 0;
-            this.dY = 1;
+            this.dY = 1.5;
         } else if (this.type == 1) {
             this.dX = 0;
-            this.dY = 2;
+            this.dY = 3;
+        } else if (this.type == 2) {
+            this.dX = 0;
+            this.dY = 4.5;
+        } else if (this.type == 3) {
+            console.log("this is intense!");
+            this.dX = Math.random() > 0.5 ? -1.5 : 1.5;
+            this.dY = 3;
         }
         this.radius = this.imgWidth/4;//TODO
         this.draw();
