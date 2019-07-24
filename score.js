@@ -1,3 +1,6 @@
+BonusImg = new Image();
+BonusImg.src = 'images/bonus.png';
+
 function Score(game){
     this.Game = game
 
@@ -13,6 +16,8 @@ function Score(game){
     this.score = 0;
     this.highScore = 0;
     this.bonus = 0;
+    this.addBonus = false;
+    this.addBonusDuration = 0;
     this.init()
 }
 
@@ -48,6 +53,14 @@ Score.prototype = {
         }
         this.canvasCtx.textAlign = "right";
         this.canvasCtx.fillText("HI " + this.highScore, canvas.width - 10, 20)
+        if(this.addBonus){
+            this.addBonusDuration = 180;
+            this.addBonus = false;
+        }
+        if(this.addBonusDuration > 0) {
+            this.displayBonus(this.Game.Player.charX-5, this.Game.Player.charY-18);
+            this.addBonusDuration--;
+        }
     },
     update: function(frameCount){
         this.draw(frameCount)
@@ -59,5 +72,8 @@ Score.prototype = {
         if (this.score > this.highScore) {
             this.highScore = this.score;
         }
+    },
+    displayBonus: function(x, y){
+        this.canvasCtx.drawImage(BonusImg, x, y, 40, 14);
     }
 }

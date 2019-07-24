@@ -92,6 +92,7 @@ Player.prototype = {
 			this.space.removeMeteors();
 			this.space.removeStars();
 			this.Game.Score.bonus += 100;
+			this.Game.Score.addBonus = true;
 			console.log("extra points");
 		}
 
@@ -186,7 +187,6 @@ Player.prototype = {
 			var rectIndent = 9*this.charWidth/32;
 
 			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, astroRadius, indent, rectIndent, xcircle, ycircle, radius)){
-				window.setTimeout("alert('Pause')", 200000000);
 				console.log("collide" + i);
 				return true;
 			}
