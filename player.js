@@ -51,17 +51,17 @@ Player.prototype = {
 	    } else if (this.leftPressed && this.charX > 0) {
 	        this.charX -= this.charSpeed;
 		}
-		this.checkCollisions(this.space.meteors);
+		this.checkCollisions(this.space.meteors)
 
 		this.drawChar();
 	},
 
 	checkCollisions : function(meteors) {
 		for (i = 0; i < meteors.length; i++) {
-			if (this.charX < meteors[i].x &&
-				meteors[i].x < this.charX + this.charWidth &&
-				meteors[i].y >= canvas.height - (this.charHeight + this.platformHeight) && 
-				meteors[i].y < canvas.height - this.platformHeight) {
+			if (this.charX < meteors[i].xPos &&
+				meteors[i].xPos < this.charX + this.charWidth &&
+				meteors[i].yPos >= canvas.height - (this.charHeight + this.platformHeight) && 
+				meteors[i].yPos < canvas.height - this.platformHeight) {
 				return true;
 			}
 		}
