@@ -78,9 +78,7 @@ Player.prototype = {
 			this.space.stars.forEach(function(star){
 				this.space.removeStar(star);
 			})
-			this.space.meteors.forEach(function(meteor){
-				this.space.removeMeteor(meteor);
-			})
+			this.space.removeMeteors();
 			this.Game.Score.bonus += 100;
 			console.log("extra points");
 		}
