@@ -37,9 +37,8 @@ Game.prototype = {
         this.update();
     },
     update: function(){
+        this.updatePending = false;
         if(!this.gameOver){
-            this.updatePending = false;
-
             this.clearCanvas()
             var now = getTimeStamp();
             var deltaTime = now - (this.time || now);
@@ -53,12 +52,11 @@ Game.prototype = {
             this.Platform.update(this.frames)
             this.Player.update()
             this.Score.update(this.frames)
-
-            this.scheduleNextUpdate()
         }
         else {
             this.endGameGUI();
         }
+        this.scheduleNextUpdate()
     },
     scheduleNextUpdate: function(){
         if(!this.updatePending){
