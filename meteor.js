@@ -32,8 +32,17 @@ Meteor.prototype = {
     },
     
     draw: function() {
+        // this.canvasCtx.beginPath();
+        // this.canvasCtx.arc(this.xPos, this.yPos+this.imgHeight-(0.8*this.imgWidth), 0.8*(this.imgWidth/2), 0, 2 * Math.PI);
+        // this.canvasCtxfillStyle = "#0095DD";
+        // this.canvasCtx.fill();
+        // this.canvasCtx.closePath();
         this.canvasCtx.drawImage(MeteorImg, this.nImage * this.imgWidth, 0, this.imgWidth, this.imgHeight, this.xPos, this.yPos, this.imgWidth, this.imgHeight);
-        
+        this.canvasCtx.beginPath();
+        this.canvasCtx.rect(this.xPos, this.yPos, this.imgWidth, this.imgHeight);
+        this.canvasCtx.stroke();
+        this.canvasCtx.closePath();
+
         if (this.frameCount % this.frameLoopCycle == 0) {
             this.nImage++;
         }

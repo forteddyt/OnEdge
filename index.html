@@ -22,7 +22,7 @@
 var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
 console.log("Starting...")
-new Game(ctx)
+var game = new Game(ctx)
 
 const Consts = {
 	meteorRadius : 10,
@@ -35,39 +35,6 @@ const Consts = {
 };
 
 //animation
-
-//Drawing
-
-//Game Controllers
-
-function endGameGUI() {
-	var midWidth = canvas.width/2;
-	var midHeight = canvas.height/2;
-
-	//rect
-	ctx.beginPath();
-
-	ctx.rect(midWidth - buttonWidth/2, 3*midHeight/2 - buttonHeight*2/3, buttonWidth, buttonHeight);
-    ctx.fillStyle = "#e0e0e0";
-	ctx.fill();
-	ctx.strokeStyle =  "#b5b3b3";
-	ctx.stroke();
-
-	ctx.rect(midWidth - gameOverWidth/2, midHeight - gameOverHeight*2/3, gameOverWidth, gameOverHeight);
-    ctx.fillStyle = "#eee";
-	ctx.fill();
-
-	ctx.closePath();
-
-	//text
-	ctx.fillStyle = "#0095DD";
-	ctx.font = "bold 50px Monospace";
-	ctx.textAlign = "center";
-	ctx.fillText("GAME OVER", midWidth, midHeight);
-
-	ctx.font = "bold 30px Monospace";
-	ctx.fillText("PLAY AGAIN", midWidth, 3*midHeight/2);
-}
 
 </script>
 
