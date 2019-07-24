@@ -138,8 +138,10 @@ Player.prototype = {
     	// this.canvasCtx.fillStyle = "#0095DD";
     	// this.canvasCtx.fill();
 		// this.canvasCtx.closePath();
-		
-		if (this.rightPressed){
+		if(this.Game.gameOver){
+			this.drawDeadChar;
+		}
+		else if (this.rightPressed){
 			this.canvasCtx.drawImage(AstronautImgRight, this.nImage * this.charWidth, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
 			this.facingRight = true; 
 		}
@@ -150,7 +152,7 @@ Player.prototype = {
 		else if (this.facingRight){
 			this.canvasCtx.drawImage(AstronautImgRight, this.charWidth, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
 		}
-		else{
+		else if (!this.facingRight){
 			this.canvasCtx.drawImage(AstronautImgLeft, this.charWidth, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
 		}
 
