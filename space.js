@@ -102,7 +102,7 @@ Space.prototype = {
 
     shouldSpawnStar: function(frameCount){
         //spawn rate of meteors increases asymptotically with time
-        if (frameCount % 500 == 0) {
+        if (frameCount % 1000 == 0 && frameCount != 0) {
             return true;
         } else {
             return false;
@@ -112,25 +112,25 @@ Space.prototype = {
     spawnMeteor : function(frameCount){
         var rand = Math.random();
         if (frameCount < 1000) {
-            if (rand < 0.4) {
+            if (rand < 0.25) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -2, this.previousMeteorX));
             } else {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
             }
-        } else if (frameCount < 3000) {
-            if (rand < 0.2) {
+        } else if (frameCount < 2500) {
+            if (rand < 0.15) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -2, this.previousMeteorX));
-            } else if (rand < 0.4) {
+            } else if (rand < 0.35) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -1, this.previousMeteorX));
             } else if (rand < 0.6) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
             } else {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 1, this.previousMeteorX));
             }
-        } else if (frameCount < 5000) {
-            if (rand < 0.2) {
+        } else if (frameCount < 4500) {
+            if (rand < 0.12) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -2, this.previousMeteorX));
-            } else if (rand < 0.3) {
+            } else if (rand < 0.20) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -1, this.previousMeteorX));
             } else if (rand < 0.5) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
@@ -139,9 +139,9 @@ Space.prototype = {
             } else {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 2, this.previousMeteorX));
             }
-        } else if (frameCount < 7000) {
+        } else if (frameCount < 6000) {
             if (rand < 0.07) {
-                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -1, this.previousMeteorX));
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -2, this.previousMeteorX));
             } else if (rand < 0.25) {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
             } else if (rand < 0.5) {
@@ -151,8 +151,54 @@ Space.prototype = {
             } else {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 3, this.previousMeteorX));
             }
+        } else if (frameCount < 6000) {
+            if (rand < 0.07) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -2, this.previousMeteorX));
+            } else if (rand < 0.25) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
+            } else if (rand < 0.4) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 1, this.previousMeteorX));
+            } else if (rand < 0.60) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 2, this.previousMeteorX));
+            } else if (rand < 0.80) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 3, this.previousMeteorX));
+            } else {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 4, this.previousMeteorX));
+            }
+        } else if (frameCount < 9000) {
+            if (rand < 0.05) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -2, this.previousMeteorX));
+            } else if (rand < 0.20) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
+            } else if (rand < 0.35) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 1, this.previousMeteorX));
+            } else if (rand < 0.55) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 2, this.previousMeteorX));
+            } else if (rand < 0.75) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 3, this.previousMeteorX));
+            } else if (rand < 0.85) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 4, this.previousMeteorX));
+            } else {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 5, this.previousMeteorX));
+            }
+        } else if (frameCount < 12000) {
+            if (rand < 0.10) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, -2, this.previousMeteorX));
+            } else if (rand < 0.15) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0, this.previousMeteorX));
+            } else if (rand < 0.25) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 1, this.previousMeteorX));
+            } else if (rand < 0.40) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 2, this.previousMeteorX));
+            } else if (rand < 0.60) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 3, this.previousMeteorX));
+            } else if (rand < 0.80) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 4, this.previousMeteorX));
+            } else {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 5, this.previousMeteorX));
+            }
         } else {
-            this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0));
+            this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 5));
         }
         this.previousMeteorX = this.meteors[this.meteors.length-1].xPos;
     },
