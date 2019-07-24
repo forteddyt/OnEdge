@@ -108,7 +108,7 @@ Game.prototype = {
         this.canvasCtx.fillText("PLAY AGAIN", midWidth, 5 * midHeight / 4);
 
         //character
-        this.Player.drawDeadChar(); 
+        //this.Player.drawDeadChar(); 
         // this.Score.update(this.frames)        
         
     },

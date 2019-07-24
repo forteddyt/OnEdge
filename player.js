@@ -99,7 +99,9 @@ Player.prototype = {
 			this.Game.gameOver = this.checkGameOverCollisions(this.space.meteors);
 		}
 
-		this.drawChar();
+		if (!this.Game.gameOver) {
+			this.drawChar();
+		}
 	
 	},
 
@@ -176,7 +178,7 @@ Player.prototype = {
 
 	drawDeadChar : function(){
 		if (this.offEdge){
-			this.charY += 1
+			this.charY += .5
 		}
 		this.canvasCtx.drawImage(AstronautImgDead, 0, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
 	},
