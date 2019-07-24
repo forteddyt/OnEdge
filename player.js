@@ -109,9 +109,8 @@ Player.prototype = {
 		Obj1Center=[obj1.x+obj1.r, obj1.y+obj1.r];
 		Obj2Center=[obj2.x+obj2.r,obj2.y+obj2.r];
 	
-		var distance=Math.sqrt( Math.pow( Obj2Center[0]-Obj1Center[0], 2)  + Math.pow( Obj2Center[1]-Obj1Center[1], 2) );
-		if(distance <= obj1.r+obj2.r){
-			//console.log("distance: " + distance + " < " + (obj1.r+obj2.r));
+		var distance=Math.sqrt(Math.pow(Obj2Center[0]-Obj1Center[0], 2) + Math.pow( Obj2Center[1]-Obj1Center[1], 2) );
+		if(distance < (obj1.r+obj2.r)){
 			return true;
 			//console.log("circle touch");
 		}
@@ -127,6 +126,23 @@ Player.prototype = {
 
 		var distX = Math.abs(circle2.x - rect.x-rect.w/2);
 		var distY = Math.abs(circle2.y - rect.y-rect.h/2);
+
+		// this.canvasCtx.beginPath();
+		// this.canvasCtx.arc(circle2.x, circle2.y, circle2.r, 0, 2*Math.PI);
+		// this.canvasCtx.strokeStyle =  "red";
+        // this.canvasCtx.stroke();
+		// this.canvasCtx.closePath();
+
+		// this.canvasCtx.beginPath();
+		// this.canvasCtx.arc(circle1.x, circle1.y, circle1.r, 0, 2*Math.PI);
+		// this.canvasCtx.strokeStyle =  "blue";
+        // this.canvasCtx.stroke();
+		// this.canvasCtx.closePath();
+
+		// this.canvasCtx.beginPath();
+		// this.canvasCtx.rect(rect.x, rect.y, rect.w, rect.h);
+		// this.canvasCtx.stroke();
+		// this.canvasCtx.closePath();
 		
 		if(this.getTouch(circle1, circle2)){
 			return true;
@@ -161,15 +177,16 @@ Player.prototype = {
 
 	checkStarCollisions: function (stars) {
 		for (i = 0; i < stars.length; i++) {
-			var radius = (stars[i].imgWidth/4);
-			var ycircle = stars[i].yPos + stars[i].imgHeight - (3*radius);
-			var xcircle = stars[i].xPos + radius;
+			var radius = 0.9*(stars[i].imgWidth/2);
+			var ycircle = stars[i].yPos;
+			var xcircle = stars[i].xPos;
 
 			var indent = 3*this.charWidth/32;
 			var astroRadius = 13*this.charWidth/32;
 			var rectIndent = 9*this.charWidth/32;
 
 			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, astroRadius, indent, rectIndent, xcircle, ycircle, radius)){
+				window.setTimeout("alert('Pause')", 200000000);
 				console.log("collide" + i);
 				return true;
 			}
