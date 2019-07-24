@@ -39,9 +39,15 @@ Game.prototype = {
     },
     update: function(){
         this.updatePending = false;
+
+        this.clearCanvas();
+        this.Score.updateHighScore();
+        this.Space.update(this.frames)
+        this.Platform.update(this.frames)
+        this.Player.update()
+        this.Score.update(this.frames)
         
-        if(!this.gameOver){
-            this.clearCanvas()
+        if (!this.gameOver) {
             var now = getTimeStamp();
             var deltaTime = now - (this.time || now);
 
@@ -49,12 +55,6 @@ Game.prototype = {
             this.runningTime += deltaTime
 
             this.frames += 1;
-            this.Score.updateHighScore();
-
-            this.Space.update(this.frames)
-            this.Platform.update(this.frames)
-            this.Player.update()
-            this.Score.update(this.frames)
         }
         else {
             this.Player.drawDeadChar()

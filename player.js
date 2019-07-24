@@ -63,12 +63,14 @@ Player.prototype = {
 
 	//Input Handling
 	keyDownHandler : function(e) {
-	    if (e.key == "Right" || e.key == "ArrowRight") {
-	        this.rightPressed = true;
-	        Player.c += 1;
-	    } else if (e.key == "Left" || e.key == "ArrowLeft") {
-	        this.leftPressed = true;
-	    }
+		if (!this.Game.gameOver) {
+			if (e.key == "Right" || e.key == "ArrowRight") {
+				this.rightPressed = true;
+				Player.c += 1;
+			} else if (e.key == "Left" || e.key == "ArrowLeft") {
+				this.leftPressed = true;
+			}
+		}
 	},
 
 	keyUpHandler : function(e) {
@@ -80,9 +82,9 @@ Player.prototype = {
 	},
 
 	update : function() {
-		if (this.rightPressed && this.charX < this.canvas.width-this.charWidth) {
+		if (!this.Game.gameOver && this.rightPressed && this.charX < this.canvas.width-this.charWidth) {
 	        this.charX += this.charSpeed;
-	    } else if (this.leftPressed && this.charX > 0) {
+	    } else if (!this.Game.gameOver && this.leftPressed && this.charX > 0) {
 	        this.charX -= this.charSpeed;
 		}
 
