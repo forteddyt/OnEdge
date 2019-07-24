@@ -159,11 +159,12 @@ Space.prototype = {
     },
 
     removeMeteors: function(){
-        meteors = [];
+        this.meteors = [];
+        console.log("should remove");
     },
 
     removeStars: function(){
-        stars = [];
+        this.stars = [];
     },
 
     removeMeteor: function(targetMeteor){
