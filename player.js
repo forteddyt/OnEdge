@@ -26,11 +26,11 @@ function Player(game) {
 
 	this.nImage = 0;
 	this.frameCount = 0;
-	this.frameLoopCycle = 5;
+	this.frameLoopCycle = 0;
 	this.facingRight = false; 
-	this.charWidth = 32
-	this.charHeight = 58
-	this.charSpeed = 3, /*default movement speed of the player per frame */
+	this.charWidth = 0
+	this.charHeight = 0
+	this.charSpeed = 0 /*default movement speed of the player per frame */
 
 	this.init();
 }
@@ -40,6 +40,14 @@ Player.prototype = {
 		this.space = this.Game.Space
 		this.Platform = this.Game.Platform
 
+		this.nImage = 0;
+		this.frameCount = 0;
+		this.frameLoopCycle = 5;
+		this.facingRight = false; 
+		this.charWidth = 32
+		this.charHeight = 58
+		this.charSpeed = 3 /*default movement speed of the player per frame */
+
 		this.canvasCtx = this.Game.canvasCtx
 		this.canvas = this.canvasCtx.canvas;
 		this.charX = this.canvas.width / 2; //left bound of the character
@@ -47,6 +55,9 @@ Player.prototype = {
 
 		this.document.addEventListener("keydown", this.keyDownHandler.bind(this), false);
 		this.document.addEventListener("keyup", this.keyUpHandler.bind(this), false);
+		
+		this.rightPressed = false; //true iff right keyboard was pressed
+		this.leftPressed = false; //true iff left keyboard was pressed
 	},
 
 	//Input Handling
@@ -73,9 +84,15 @@ Player.prototype = {
 	    } else if (this.leftPressed && this.charX > 0) {
 	        this.charX -= this.charSpeed;
 		}
-		this.Game.gameOver = this.checkCollisions(this.space.meteors);
+		if (!this.Game.gameOver){
+			this.Game.gameOver = this.checkCollisions(this.space.meteors);
+		}
 
-		this.drawChar();
+		if(this.Game.gameOver){
+			this.drawDeadChar;
+		} else {
+			this.drawChar();
+		}
 	},
 
 	getTouch : function(obj1,obj2){
@@ -143,10 +160,8 @@ Player.prototype = {
     	// this.canvasCtx.fillStyle = "#0095DD";
     	// this.canvasCtx.fill();
 		// this.canvasCtx.closePath();
-		if(this.Game.gameOver){
-			this.drawDeadChar;
-		}
-		else if (this.rightPressed){
+		
+		if (this.rightPressed){
 			this.canvasCtx.drawImage(AstronautImgRight, this.nImage * this.charWidth, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
 			this.facingRight = true; 
 		}
@@ -168,5 +183,8 @@ Player.prototype = {
             this.nImage = 0;
 		}
 		this.frameCount++; 
+	},
+	reset: function(){
+		this.init()
 	}
 };

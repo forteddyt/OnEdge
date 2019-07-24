@@ -27,7 +27,10 @@ Space.prototype = {
     init: function(){
         this.canvasCtx = this.Game.canvasCtx
         this.time = 0;
-        this.update()
+
+        this.meteors = [];
+        this.stars = [];
+        this.previousMeteorX = 0;
     },
     update : function(frameCount){
         this.canvasCtx.drawImage(PlanetImg, 0, 0, this.planetSize, this.planetSize, 270, 40, this.planetSize, this.planetSize);
@@ -154,5 +157,9 @@ Space.prototype = {
                 stars.splice(i, 1);
             }
         }
+    },
+
+    reset: function(){
+        this.init()
     }
 }

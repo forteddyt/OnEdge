@@ -19,6 +19,8 @@ Score.prototype = {
     init: function(){
         this.canvasCtx = this.Game.canvasCtx
         this.canvas = this.canvasCtx.canvas
+        
+        this.score = 0;
     },
     draw: function(frameCount){
         this.score = Math.floor(frameCount/10);
@@ -39,5 +41,8 @@ Score.prototype = {
     },
     update: function(frameCount){
         this.draw(frameCount)
+    },
+    reset: function(){
+        this.init()
     }
 }
