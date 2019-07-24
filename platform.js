@@ -26,9 +26,8 @@ Platform.prototype = {
         this.canvas = this.canvasCtx.canvas
 
         this.platformHeight = 16       
-        this.platformWidth = this.canvas.width * 1 / 2
-
-        this.platformX =  (this.canvas.width - this.canvas.width * 1 / 2) / 2 /*left bound of the platform  */
+        this.platformWidth = this.canvas.width * 3 / 5
+        this.platformX =  (this.canvas.width / 5)  /*left bound of the platform  */
         this.platformY = this.canvas.height - this.platformHeight
         },
     draw: function(){
