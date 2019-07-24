@@ -12,8 +12,9 @@ function Star(canvasCtx, space, type, prevX){
     this.prevX = prevX;
 
     this.nImage = 0;
-    this.imgWidth = 40;
-    this.imgHeight = 60;
+    this.imgWidth = 20;
+    this.imgHeight = 20;
+    this.imgScale = 1.5; 
 
     this.frameCount = 0;
     this.frameLoopCycle = 15;
@@ -55,12 +56,12 @@ Star.prototype = {
         // this.canvasCtxfillStyle = "#0095DD";
         // this.canvasCtx.fill();
         // this.canvasCtx.closePath();
-        this.canvasCtx.drawImage(StarImg, this.nImage * this.imgWidth, 0, this.imgWidth, this.imgHeight, this.xPos, this.yPos, this.imgWidth, this.imgHeight);
+        this.canvasCtx.drawImage(StarImg, this.nImage * this.imgWidth, 0, this.imgWidth, this.imgHeight, this.xPos, this.yPos, this.imgScale * this.imgWidth, this.imgScale * this.imgHeight);
 
         if (this.frameCount % this.frameLoopCycle == 0) {
             this.nImage++;
         }
-        if (this.nImage > 3) {
+        if (this.nImage > 3) { 
             this.nImage = 0;
         }
     },
