@@ -57,6 +57,7 @@ Game.prototype = {
             this.Score.update(this.frames)
         }
         else {
+            this.Player.drawDeadChar()
             this.endGameGUI();
         }
         this.scheduleNextUpdate()

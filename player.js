@@ -23,7 +23,7 @@ function Player(game) {
 	this.rightPressed = false; //true iff right keyboard was pressed
 	this.leftPressed = false; //true iff left keyboard was pressed
 	this.document = document;
-
+	this.offEdge = false;
 	this.nImage = 0;
 	this.frameCount = 0;
 	this.frameLoopCycle = 0;
@@ -40,6 +40,7 @@ Player.prototype = {
 		this.space = this.Game.Space
 		this.Platform = this.Game.Platform
 
+		this.offEdge = false
 		this.nImage = 0;
 		this.frameCount = 0;
 		this.frameLoopCycle = 5;
@@ -96,11 +97,8 @@ Player.prototype = {
 			this.Game.gameOver = this.checkGameOverCollisions(this.space.meteors);
 		}
 
-		if(this.Game.gameOver){
-			this.drawDeadChar;
-		} else {
-			this.drawChar();
-		}
+		this.drawChar();
+	
 	},
 
 	getTouch : function(obj1,obj2){
@@ -147,10 +145,11 @@ Player.prototype = {
 			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, astroRadius, indent, rectIndent, xcircle, ycircle, radius)){
 				console.log("collide" + i);
 				return true;
-			}
+			} 
 		}
 		if (this.charX + (this.charWidth * 0.8) < this.Platform.platformX || this.charX + (this.charWidth * 0.2) > this.Platform.platformX + this.Platform.platformWidth) {
 			//TODO add animation here for player falling off edge
+			this.offEdge = true; 
 			return true;
 		}
 		return false;
@@ -174,6 +173,9 @@ Player.prototype = {
 	},
 
 	drawDeadChar : function(){
+		if (this.offEdge){
+			this.charY += 1
+		}
 		this.canvasCtx.drawImage(AstronautImgDead, 0, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
 	},
 
