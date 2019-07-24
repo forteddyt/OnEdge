@@ -26,7 +26,7 @@ Meteor.prototype = {
         this.yPos = -this.imgSprite.height - 10; // Meteor should start off of the screen
         this.dX = Math.random() * 1.5 - .75;
         this.dY = Math.random() * 3;
-        
+        this.radius = this.imgWidth/4;
         this.draw();
         meteors.push(this)
     },
@@ -39,7 +39,7 @@ Meteor.prototype = {
         // this.canvasCtx.closePath();
         this.canvasCtx.drawImage(MeteorImg, this.nImage * this.imgWidth, 0, this.imgWidth, this.imgHeight, this.xPos, this.yPos, this.imgWidth, this.imgHeight);
         this.canvasCtx.beginPath();
-        this.canvasCtx.rect(this.xPos, this.yPos, this.imgWidth, this.imgHeight);
+        this.canvasCtx.rect(this.xPos+this.radius, this.yPos+this.imgHeight-(3*this.radius), this.radius*2, this.radius*2);
         this.canvasCtx.stroke();
         this.canvasCtx.closePath();
 
