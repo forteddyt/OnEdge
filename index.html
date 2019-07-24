@@ -37,7 +37,7 @@ function onClickHandler(evt) {
 
             if (evt.layerX > midWidth - buttonWidth/2 && evt.layerX < midWidth + buttonWidth/2 && 
             evt.layerY > 3*midHeight/2 - buttonHeight*2/3 && evt.layerY < 3*midHeight/2 + buttonHeight/3) {
-                game.restartGame();
+                game = new Game(ctx);
             }
         }
     }
