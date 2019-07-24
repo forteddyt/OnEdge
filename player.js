@@ -100,11 +100,9 @@ Player.prototype = {
 
 		if (distX <= (rect.w/2)) { 
 			return true; 
-			console.log("collision");
 		} 
 		if (distY <= (rect.h/2)) { 
 			return true; 
-			console.log("collision");
 		}
 		var dx=distX-rect.w/2;
 		var dy=distY-rect.h/2;
@@ -120,12 +118,10 @@ Player.prototype = {
 			var xcircle = meteors[i].xPos + radius;
 			var ycircle = meteors[i].yPos + meteors[i].imgHeight - (3*radius);
 			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, xcircle, ycircle, radius)){
-				console.log("collide" + i);
 				return true;
 			}
 		}
 		if (this.charX + (this.charWidth * 0.8) < this.Platform.platformX || this.charX + (this.charWidth * 0.2) > this.Platform.platformX + this.Platform.platformWidth) {
-			console.log("off the edge");
 			//TODO add animation here for player falling off edge
 			return true;
 		}
@@ -133,7 +129,6 @@ Player.prototype = {
 	},
 
 	drawDeadChar : function(){
-		console.log(AstronautImgDead);
 		this.canvasCtx.drawImage(AstronautImgDead, 0, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
 	},
 

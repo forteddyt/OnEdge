@@ -104,9 +104,7 @@ Game.prototype = {
         this.canvasCtx.fillText("PLAY AGAIN", midWidth, 3*midHeight/2);
 
         //character
-        console.log("a");
         this.Player.drawDeadChar(); 
-        console.log("b");
     }
 
 }
