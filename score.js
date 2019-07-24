@@ -11,8 +11,6 @@ function Score(game){
     this.SCORE_FLASH_SPEED = 30;
 
     this.score = 0;
-    this.bonus = 0;
-
     this.init()
 }
 
@@ -20,10 +18,13 @@ Score.prototype = {
     init: function(){
         this.canvasCtx = this.Game.canvasCtx
         this.canvas = this.canvasCtx.canvas
+        
+        this.score = 0;
     },
     draw: function(frameCount){
-        this.score = this.bonus + Math.floor(frameCount/10);
+        this.score = Math.floor(frameCount/10);
         this.canvasCtx.font = "20px Monospace";
+        this.canvasCtx.fillStyle = "black";
         this.canvasCtx.textAlign = "left";
         if (this.score == 100 || this.score == 250 || this.score == 500 || this.score == 750 || this.score == 1000 || this.score == 1500 || (this.score % 1000 == 0 && this.score > 0)) {
             this.scoreFlashDuration = this.SCORE_FLASH_FRAMES;
@@ -41,5 +42,8 @@ Score.prototype = {
     },
     update: function(frameCount){
         this.draw(frameCount)
+    },
+    reset: function(){
+        this.init()
     }
 }

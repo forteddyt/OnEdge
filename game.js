@@ -22,7 +22,7 @@ function Game(canvasCtx){
     this.Player = null;
     this.Score = null;
     this.gameOver = false;
-    this.keyUp = false;
+    this.keyUp = true;
 
     this.init()
 }
@@ -109,6 +109,15 @@ Game.prototype = {
 
         //character
         this.Player.drawDeadChar(); 
+        
+    },
+    restart: function() {
+        this.frames = 0
+        this.gameOver = false;
+    
+        this.Space.reset()
+        this.Player.reset()
+        this.Score.reset()
     }
 }
 

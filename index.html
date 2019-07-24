@@ -43,27 +43,28 @@ function onClickHandler(evt) {
 }
 
 function onKeyDownHandler(evt) {
-	if (game.gameOver && game.keyUp) {
-		if (evt.key == "Right" || evt.key == "ArrowRight" || 
+	if (game.gameOver) {
+		if ((game.Player.rightPressed || game.Player.leftPressed) && game.keyUp) {
+			game.keyUp = false;
+		}
+		if (game.keyUp && 
+			(evt.key == "Right" || evt.key == "ArrowRight" || 
 			evt.key == "Left" || evt.key == "ArrowLeft" ||
-			evt.key == " " || evt.key == "Space") {
-	        restartGame();
-	    }
+			evt.key == " " || evt.key == "Space")) {
+				restartGame();
+		}
 	}
 }
 
 function onKeyUpHandler(evt) {
 	if (game.gameOver) {
-		if (evt.key == "Right" || evt.key == "ArrowRight" || 
-			evt.key == "Left" || evt.key == "ArrowLeft" ||
-			evt.key == " " || evt.key == "Space") {
-	        game.keyUp = true;
-	    }
+	    game.keyUp = true;
 	}
 }
 
 function restartGame() {
-	game = new Game(ctx);
+	console.log("YE")
+	game.restart();
 }
 
 const Consts = {
