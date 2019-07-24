@@ -98,7 +98,7 @@ Game.prototype = {
         this.canvasCtx.closePath();
 
         //text
-        this.canvasCtx.fillStyle = "#808080";
+        this.canvasCtx.fillStyle = "#5A5A5A";
         this.canvasCtx.font = "bold 50px Monospace";
         this.canvasCtx.textAlign = "center";
         this.canvasCtx.fillText("GAME OVER", midWidth, midHeight);
