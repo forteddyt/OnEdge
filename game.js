@@ -109,6 +109,15 @@ Game.prototype = {
 
         //character
         this.Player.drawDeadChar(); 
+        
+    },
+    restart: function() {
+        this.frames = 0
+        this.gameOver = false;
+    
+        this.Space.reset()
+        this.Player.reset()
+        this.Score.reset()
     }
 }
 

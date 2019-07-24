@@ -27,7 +27,10 @@ Space.prototype = {
     init: function(){
         this.canvasCtx = this.Game.canvasCtx
         this.time = 0;
-        this.update()
+
+        this.meteors = [];
+        this.stars = [];
+        this.previousMeteorX = 0;
     },
     update : function(frameCount){
         
@@ -159,11 +162,12 @@ Space.prototype = {
     },
 
     removeMeteors: function(){
-        meteors = [];
+        this.meteors = [];
+        console.log("should remove");
     },
 
     removeStars: function(){
-        stars = [];
+        this.stars = [];
     },
 
     removeMeteor: function(targetMeteor){
@@ -180,5 +184,9 @@ Space.prototype = {
                 this.stars.splice(i, 1);
             }
         }
+    },
+
+    reset: function(){
+        this.init()
     }
 }

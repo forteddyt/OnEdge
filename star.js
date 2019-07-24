@@ -12,9 +12,9 @@ function Star(canvasCtx, space, type, prevX){
     this.prevX = prevX;
 
     this.nImage = 0;
-    this.imgWidth = 19;
-    this.imgHeight = 19;
-    this.imgScale = 1.5; 
+    this.imgWidth = 38;
+    this.imgHeight = 38;
+    this.imgScale = 1; 
 
     this.frameCount = 0;
     this.frameLoopCycle = 10;

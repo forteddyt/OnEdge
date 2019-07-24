@@ -26,11 +26,11 @@ function Player(game) {
 
 	this.nImage = 0;
 	this.frameCount = 0;
-	this.frameLoopCycle = 5;
+	this.frameLoopCycle = 0;
 	this.facingRight = false; 
-	this.charWidth = 32
-	this.charHeight = 58
-	this.charSpeed = 3, /*default movement speed of the player per frame */
+	this.charWidth = 0
+	this.charHeight = 0
+	this.charSpeed = 0 /*default movement speed of the player per frame */
 
 	this.init();
 }
@@ -40,6 +40,14 @@ Player.prototype = {
 		this.space = this.Game.Space
 		this.Platform = this.Game.Platform
 
+		this.nImage = 0;
+		this.frameCount = 0;
+		this.frameLoopCycle = 5;
+		this.facingRight = false; 
+		this.charWidth = 32
+		this.charHeight = 58
+		this.charSpeed = 3 /*default movement speed of the player per frame */
+
 		this.canvasCtx = this.Game.canvasCtx
 		this.canvas = this.canvasCtx.canvas;
 		this.charX = this.canvas.width / 2; //left bound of the character
@@ -47,6 +55,9 @@ Player.prototype = {
 
 		this.document.addEventListener("keydown", this.keyDownHandler.bind(this), false);
 		this.document.addEventListener("keyup", this.keyUpHandler.bind(this), false);
+		
+		this.rightPressed = false; //true iff right keyboard was pressed
+		this.leftPressed = false; //true iff left keyboard was pressed
 	},
 
 	//Input Handling
@@ -73,16 +84,23 @@ Player.prototype = {
 	    } else if (this.leftPressed && this.charX > 0) {
 	        this.charX -= this.charSpeed;
 		}
-		this.Game.gameOver = this.checkCollisions(this.space.meteors);
-		if(this.checkCollisions(this.space.stars)){
-			this.space.stars.forEach(function(star){
-				this.space.removeStar(star);
-			})
+
+		if(this.checkStarCollisions(this.space.stars)){
 			this.space.removeMeteors();
+			this.space.removeStars();
 			this.Game.Score.bonus += 100;
 			console.log("extra points");
 		}
-		this.drawChar();
+
+		if (!this.Game.gameOver){
+			this.Game.gameOver = this.checkGameOverCollisions(this.space.meteors);
+		}
+
+		if(this.Game.gameOver){
+			this.drawDeadChar;
+		} else {
+			this.drawChar();
+		}
 	},
 
 	getTouch : function(obj1,obj2){
@@ -106,7 +124,23 @@ Player.prototype = {
 		var rect={x:x1+i2, y:y1+0.8*i2, w:7*w1/16, h:h1-0.9*i2};
 
 		var distX = Math.abs(circle2.x - rect.x-rect.w/2);
-    	var distY = Math.abs(circle2.y - rect.y-rect.h/2);
+		var distY = Math.abs(circle2.y - rect.y-rect.h/2);
+		// this.canvasCtx.beginPath();
+		// this.canvasCtx.arc(circle2.x, circle2.y, circle2.r, 0, 2*Math.PI);
+		// this.canvasCtx.strokeStyle =  "blue";
+        // this.canvasCtx.stroke();
+		// this.canvasCtx.closePath();
+
+		// this.canvasCtx.beginPath();
+		// this.canvasCtx.arc(circle1.x, circle1.y, circle1.r, 0, 2*Math.PI);
+		// this.canvasCtx.strokeStyle =  "blue";
+        // this.canvasCtx.stroke();
+		// this.canvasCtx.closePath();
+
+		// this.canvasCtx.beginPath();
+		// this.canvasCtx.rect(rect.x, rect.y, rect.w, rect.h);
+		// this.canvasCtx.stroke();
+		// this.canvasCtx.closePath();
 		if(this.getTouch(circle1, circle2)){
 			return true;
 		}
@@ -115,12 +149,12 @@ Player.prototype = {
 		return (dx*dx+dy*dy<=(circle2.r*circle2.r));
 	},
 
-	checkCollisions : function(meteors) {
+	checkGameOverCollisions : function(meteors, ismeteor) {
 		for (i = 0; i < meteors.length; i++) {
-			//console.log("x= "+ meteors[i].xPos + " y=" + meteors[i].yPos);
 			var radius = (meteors[i].imgWidth/4);
-			var xcircle = meteors[i].xPos + radius;
 			var ycircle = meteors[i].yPos + meteors[i].imgHeight - (3*radius);
+			var xcircle = meteors[i].xPos + radius;
+
 			var indent = 3*this.charWidth/32;
 			var astroRadius = 13*this.charWidth/32;
 			var rectIndent = 9*this.charWidth/32;
@@ -136,6 +170,22 @@ Player.prototype = {
 		}
 		return false;
 	},
+	checkStarCollisions: function (stars) {
+		for (i = 0; i < stars.length; i++) {
+			var radius = (stars[i].imgWidth/4);
+			var ycircle = stars[i].yPos + stars[i].imgHeight - (3*radius);
+			var xcircle = stars[i].xPos + radius;
+
+			var indent = 3*this.charWidth/32;
+			var astroRadius = 13*this.charWidth/32;
+			var rectIndent = 9*this.charWidth/32;
+
+			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, astroRadius, indent, rectIndent, xcircle, ycircle, radius)){
+				console.log("collide" + i);
+				return true;
+			}
+		}
+	},
 
 	drawDeadChar : function(){
 		this.canvasCtx.drawImage(AstronautImgDead, 0, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
@@ -147,10 +197,8 @@ Player.prototype = {
     	// this.canvasCtx.fillStyle = "#0095DD";
     	// this.canvasCtx.fill();
 		// this.canvasCtx.closePath();
-		if(this.Game.gameOver){
-			this.drawDeadChar;
-		}
-		else if (this.rightPressed){
+		
+		if (this.rightPressed){
 			this.canvasCtx.drawImage(AstronautImgRight, this.nImage * this.charWidth, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
 			this.facingRight = true; 
 		}
@@ -172,5 +220,8 @@ Player.prototype = {
             this.nImage = 0;
 		}
 		this.frameCount++; 
+	},
+	reset: function(){
+		this.init()
 	}
 };
