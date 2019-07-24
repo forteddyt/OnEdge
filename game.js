@@ -37,9 +37,8 @@ Game.prototype = {
         this.update();
     },
     update: function(){
+        this.updatePending = false;
         if(!this.gameOver){
-            this.updatePending = false;
-
             this.clearCanvas()
             var now = getTimeStamp();
             var deltaTime = now - (this.time || now);
@@ -53,12 +52,11 @@ Game.prototype = {
             this.Platform.update(this.frames)
             this.Player.update()
             this.Score.update(this.frames)
-
-            this.scheduleNextUpdate()
         }
         else {
             this.endGameGUI();
         }
+        this.scheduleNextUpdate()
     },
     scheduleNextUpdate: function(){
         if(!this.updatePending){
@@ -72,8 +70,13 @@ Game.prototype = {
     //Game Controllers
 
     endGameGUI: function() {
-        var midWidth = this.canvasCtx.canvas.width/2;
-        var midHeight = this.canvasCtx.canvas.height/2;
+        var canvas = this.canvasCtx.canvas
+        var midWidth = canvas.width/2;
+        var midHeight = canvas.height/2;
+        var buttonWidth = canvas.width*2/5
+        var buttonHeight = canvas.width/8
+        var gameOverWidth = canvas.width*3/4
+        var gameOverHeight = canvas.height/4
 
         //rect
         this.canvasCtx.beginPath();
