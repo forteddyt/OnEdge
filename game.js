@@ -80,14 +80,12 @@ Game.prototype = {
         var midWidth = canvas.width/2;
         var midHeight = canvas.height/2;
         var buttonWidth = canvas.width*2/5;
-        var buttonHeight = canvas.width/8;
-        var gameOverWidth = canvas.width*3/4;
-        var gameOverHeight = canvas.height/4;
+        var buttonHeight = canvas.width/9;
 
         //rect
         this.canvasCtx.beginPath();
 
-        this.canvasCtx.rect(midWidth - buttonWidth/2, 3*midHeight/2 - buttonHeight*2/3, buttonWidth, buttonHeight);
+        this.canvasCtx.rect(midWidth - buttonWidth/2, midHeight * 5 / 4 - buttonHeight*2/3, buttonWidth, buttonHeight);
         this.canvasCtx.fillStyle = "#e0e0e0";
         this.canvasCtx.fill();
         this.canvasCtx.strokeStyle =  "#b5b3b3";
@@ -103,10 +101,10 @@ Game.prototype = {
         this.canvasCtx.fillStyle = "#5A5A5A";
         this.canvasCtx.font = "bold 50px Monospace";
         this.canvasCtx.textAlign = "center";
-        this.canvasCtx.fillText("GAME OVER", midWidth, midHeight * 2 / 3);
+        this.canvasCtx.fillText("GAME OVER", midWidth, midHeight * 3 / 4);
 
         this.canvasCtx.font = "bold 30px Monospace";
-        this.canvasCtx.fillText("PLAY AGAIN", midWidth, 3*midHeight/2);
+        this.canvasCtx.fillText("PLAY AGAIN", midWidth, 5 * midHeight / 4);
 
         //character
         this.Player.drawDeadChar(); 
