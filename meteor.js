@@ -38,10 +38,6 @@ Meteor.prototype = {
         // this.canvasCtx.fill();
         // this.canvasCtx.closePath();
         this.canvasCtx.drawImage(MeteorImg, this.nImage * this.imgWidth, 0, this.imgWidth, this.imgHeight, this.xPos, this.yPos, this.imgWidth, this.imgHeight);
-        this.canvasCtx.beginPath();
-        this.canvasCtx.rect(this.xPos+this.radius, this.yPos+this.imgHeight-(3*this.radius), this.radius*2, this.radius*2);
-        this.canvasCtx.stroke();
-        this.canvasCtx.closePath();
 
         if (this.frameCount % this.frameLoopCycle == 0) {
             this.nImage++;

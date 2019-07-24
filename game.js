@@ -38,6 +38,7 @@ Game.prototype = {
     },
     update: function(){
         this.updatePending = false;
+        
         if(!this.gameOver){
             this.clearCanvas()
             var now = getTimeStamp();

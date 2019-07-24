@@ -68,8 +68,18 @@ Player.prototype = {
 	},
 
 	collide : function(x1, y1, w1, h1, x2, y2, r1) {
-		var circle={x:x2, y:y2, r:r1};
+		var circle={x:x2+3*(r1/4), y:y2+3*(r1/4), r:r1};
 		var rect={x:x1, y:y1, w:w1, h:h1};
+
+		this.canvasCtx.beginPath();
+        this.canvasCtx.arc(circle.x, circle.y, circle.r, 0, 2*Math.PI);
+        this.canvasCtx.stroke();
+		this.canvasCtx.closePath();
+		
+		this.canvasCtx.beginPath();
+        this.canvasCtx.rect(rect.x, rect.y, rect.w, rect.h);
+        this.canvasCtx.stroke();
+		this.canvasCtx.closePath();
 
 		var distX = Math.abs(circle.x - rect.x-rect.w/2);
     	var distY = Math.abs(circle.y - rect.y-rect.h/2);
@@ -97,7 +107,7 @@ Player.prototype = {
 			//console.log("x= "+ meteors[i].xPos + " y=" + meteors[i].yPos);
 			var radius = (meteors[i].imgWidth/4);
 			var xcircle = meteors[i].xPos + radius;
-			var ycircle = meteors[i].yPos + meteors[i].imgHeight - meteors[i].imgWidth;
+			var ycircle = meteors[i].yPos + meteors[i].imgHeight - (3*radius);
 			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, xcircle, ycircle, radius)){
 				console.log("collide" + i);
 				return true;
