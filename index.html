@@ -16,6 +16,7 @@
 <script src="space.js"></script>
 <script src="platform.js"></script>
 <script src="game.js"></script>
+<script src="score.js"></script>
 <script>
 
 var canvas = document.getElementById("gameCanvas");
@@ -33,35 +34,9 @@ const Consts = {
 	meteorSpawnRate : 5,
 };
 
-
-var meteors = []; //array of all meteors on screen
-var frameCount = 0; //ticker that increments each frame
-var gameOver = false; //true iff game player has lost
-
 //animation
-var scoreFlashDuration = 0;
-var scoreFlashValue = 0;
-const SCORE_FLASH_FRAMES = 240;
-const SCORE_FLASH_SPEED = 30;
 
 //Drawing
-function drawScoreCounter() {
-	var score = Math.floor(frameCount/10);
-	ctx.font = "20px Monospace";
-	if (score == 100 || score == 500 || score == 1000 || score == 2000 || score == 5000) {
-		scoreFlashDuration = SCORE_FLASH_FRAMES;
-		scoreFlashValue = score;
-	}
-
-	if (scoreFlashDuration > 0) {
-		scoreFlashDuration--;
-		if (Math.floor(scoreFlashDuration / SCORE_FLASH_SPEED) % 2 == 1) {
-			ctx.fillText(scoreFlashValue, 10, 20);
-		}
-	} else {
-		ctx.fillText(score, 10, 20);
-	}
-}
 
 //Game Controllers
 
@@ -92,26 +67,6 @@ function endGameGUI() {
 
 	ctx.font = "bold 30px Monospace";
 	ctx.fillText("PLAY AGAIN", midWidth, 3*midHeight/2);
-}
-
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    //draw
-    drawPlatform();
-    drawScoreCounter();
-
-    //update
-
-    player.checkCollisions(meteors);
-
-	if (gameOver) {
-		endGameGUI();
-		clearInterval(interval);
-	}
-    
-    frameCount++;
-
 }
 
 </script>
