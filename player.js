@@ -74,7 +74,16 @@ Player.prototype = {
 	        this.charX -= this.charSpeed;
 		}
 		this.Game.gameOver = this.checkCollisions(this.space.meteors);
-
+		if(this.checkCollisions(this.space.stars)){
+			this.space.stars.forEach(function(star){
+				this.space.removeStar(star);
+			})
+			this.space.meteors.forEach(function(meteor){
+				this.space.removeMeteor(meteor);
+			})
+			this.Game.Score.bonus += 100;
+			console.log("extra points");
+		}
 		this.drawChar();
 	},
 
@@ -84,9 +93,9 @@ Player.prototype = {
 	
 		var distance=Math.sqrt( Math.pow( Obj2Center[0]-Obj1Center[0], 2)  + Math.pow( Obj2Center[1]-Obj1Center[1], 2) );
 		if(distance <= obj1.r+obj2.r){
-			console.log("distance: " + distance + " < " + (obj1.r+obj2.r));
+			//console.log("distance: " + distance + " < " + (obj1.r+obj2.r));
 			return true;
-			console.log("circle touch");
+			//console.log("circle touch");
 		}
 		else{
 			return false;
@@ -106,8 +115,6 @@ Player.prototype = {
 		var dx=distX-rect.w/2;
 		var dy=distY-rect.h/2;
 		return (dx*dx+dy*dy<=(circle2.r*circle2.r));
-
-		//TODO figure out the bounding box issues with the meteors
 	},
 
 	checkCollisions : function(meteors) {
@@ -116,7 +123,6 @@ Player.prototype = {
 			var radius = (meteors[i].imgWidth/4);
 			var xcircle = meteors[i].xPos + radius;
 			var ycircle = meteors[i].yPos + meteors[i].imgHeight - (3*radius);
-
 			var indent = 3*this.charWidth/32;
 			var astroRadius = 13*this.charWidth/32;
 			var rectIndent = 9*this.charWidth/32;

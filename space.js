@@ -56,7 +56,6 @@ Space.prototype = {
         this.meteors.forEach(function(meteor){
             meteor.update(frameCount);
         })
-
         this.stars.forEach(function(star){
             star.update(frameCount);
         })
@@ -141,17 +140,17 @@ Space.prototype = {
     },
 
     removeMeteor: function(targetMeteor){
-        for (var i = 0; i < meteors.length; i++) {
-            if (meteors[i] === targetMeteor) {
-                meteors.splice(i, 1);
+        for (var i = 0; i < this.meteors.length; i++) {
+            if (this.meteors[i] === targetMeteor) {
+                this.meteors.splice(i, 1);
             }
         } 
     },
 
     removeStar: function(targetStar){
-        for (var i = 0; i < stars.length; i++) {
-            if (stars[i] === targetStar) {
-                stars.splice(i, 1);
+        for (var i = 0; i < this.stars.length; i++) {
+            if (this.stars[i] === targetStar) {
+                this.stars.splice(i, 1);
             }
         }
     }
