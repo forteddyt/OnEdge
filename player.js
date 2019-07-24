@@ -78,35 +78,51 @@ Player.prototype = {
 		this.drawChar();
 	},
 
-	collide : function(x1, y1, w1, h1, x2, y2, r1) {
-		var circle={x:x2+3*(r1/4), y:y2+3*(r1/4), r:r1};
-		var rect={x:x1, y:y1, w:w1, h:h1};
+	getTouch : function(obj1,obj2){
+		Obj1Center=[obj1.x+obj1.r, obj1.y+obj1.r];
+		Obj2Center=[obj2.x+obj2.r,obj2.y+obj2.r];
+	
+		var distance=Math.sqrt( Math.pow( Obj2Center[0]-Obj1Center[0], 2)  + Math.pow( Obj2Center[1]-Obj1Center[1], 2) );
+		if(distance <= obj1.r+obj2.r){
+			console.log("distance: " + distance + " < " + (obj1.r+obj2.r));
+			return true;
+			console.log("circle touch");
+		}
+		else{
+			return false;
+		}
+	},
+
+	collide : function(x1, y1, w1, h1, r1, i1, i2, x2, y2, r2) {
+		var circle1={x:x1+i1+r1, y:y1+i1+r1, r:r1};
+		var circle2={x:x2+r2, y:y2+r2, r:r2};
+		var rect={x:x1+i2, y:y1+0.8*i2, w:7*w1/16, h:h1-0.9*i2};
 
 		this.canvasCtx.beginPath();
-        this.canvasCtx.arc(circle.x, circle.y, circle.r, 0, 2*Math.PI);
+		this.canvasCtx.arc(circle2.x, circle2.y, circle2.r, 0, 2*Math.PI);
+		this.canvasCtx.strokeStyle =  "blue";
         this.canvasCtx.stroke();
 		this.canvasCtx.closePath();
-		
+
 		this.canvasCtx.beginPath();
-        this.canvasCtx.rect(rect.x, rect.y, rect.w, rect.h);
+		this.canvasCtx.arc(circle1.x, circle1.y, circle1.r, 0, 2*Math.PI);
+		this.canvasCtx.strokeStyle =  "blue";
         this.canvasCtx.stroke();
 		this.canvasCtx.closePath();
 
-		var distX = Math.abs(circle.x - rect.x-rect.w/2);
-    	var distY = Math.abs(circle.y - rect.y-rect.h/2);
+		this.canvasCtx.beginPath();
+		this.canvasCtx.rect(rect.x, rect.y, rect.w, rect.h);
+		this.canvasCtx.stroke();
+		this.canvasCtx.closePath();
 
-    	if (distX > (rect.w/2 + circle.r)) { return false; }
-    	if (distY > (rect.h/2 + circle.r)) { return false; }
-
-		if (distX <= (rect.w/2)) { 
-			return true; 
-		} 
-		if (distY <= (rect.h/2)) { 
-			return true; 
+		var distX = Math.abs(circle2.x - rect.x-rect.w/2);
+    	var distY = Math.abs(circle2.y - rect.y-rect.h/2);
+		if(this.getTouch(circle1, circle2)){
+			return true;
 		}
 		var dx=distX-rect.w/2;
 		var dy=distY-rect.h/2;
-		return (dx*dx+dy*dy<=(circle.r*circle.r));
+		return (dx*dx+dy*dy<=(circle2.r*circle2.r));
 
 		//TODO figure out the bounding box issues with the meteors
 	},
@@ -117,7 +133,13 @@ Player.prototype = {
 			var radius = (meteors[i].imgWidth/4);
 			var xcircle = meteors[i].xPos + radius;
 			var ycircle = meteors[i].yPos + meteors[i].imgHeight - (3*radius);
-			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, xcircle, ycircle, radius)){
+
+			var indent = 3*this.charWidth/32;
+			var astroRadius = 13*this.charWidth/32;
+			var rectIndent = 9*this.charWidth/32;
+
+			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, astroRadius, indent, rectIndent, xcircle, ycircle, radius)){
+				console.log("collide" + i);
 				return true;
 			}
 		}
