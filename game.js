@@ -8,6 +8,7 @@ function Game(canvasCtx){
     this.instance_ = this;
 
     this.canvasCtx = canvasCtx;
+    this.document = document;
 
     this.updatePending = false;
     this.rafId = 0;
@@ -15,6 +16,7 @@ function Game(canvasCtx){
     this.runningTime = 0;
 
     this.Space = null;
+    this.Player = null;
 
     this.init()
 }
@@ -22,6 +24,7 @@ function Game(canvasCtx){
 Game.prototype = {
     init: function(){
         this.Space = new Space(this.canvasCtx)
+        this.Player = new Player(this.canvasCtx, this.document, this.Space)
 
         this.update();
     },
@@ -36,6 +39,7 @@ Game.prototype = {
         this.runningTime += deltaTime
 
         this.Space.update(this.runningTime)
+        this.Player.update()
 
         this.scheduleNextUpdate()
     },
@@ -49,11 +53,6 @@ Game.prototype = {
         this.canvasCtx.clearRect(0, 0, this.canvasCtx.canvas.width, this.canvasCtx.canvas.height);
     }
 }
-
-setTimeout(function(){
-    console.log("Starting...")
-    new Game(ctx)
-}, 750)
 
 function getTimeStamp(){
     return new Date().getTime()
