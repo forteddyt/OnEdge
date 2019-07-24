@@ -1,3 +1,6 @@
+AstronautImg = new Image(); 
+AstronautImg.src = 'images/astronaut.png'
+
 function Player(game) {
 	// Singleton
     if(Player.instance_){
@@ -17,8 +20,12 @@ function Player(game) {
 	this.leftPressed = false; //true iff left keyboard was pressed
 	this.document = document;
 
-	this.charWidth = 20
-	this.charHeight = 30
+	this.nImage = 0;
+	this.frameCount = 0;
+	this.frameLoopCycle = 5;
+	
+	this.charWidth = 16
+	this.charHeight = 29
 	this.charSpeed = 3, /*default movement speed of the player per frame */
 
 	this.init();
@@ -122,10 +129,19 @@ Player.prototype = {
 	},
 
 	drawChar : function() {
-    	this.canvasCtx.beginPath();
-    	this.canvasCtx.rect(this.charX, this.charY, this.charWidth, this.charHeight);
-    	this.canvasCtx.fillStyle = "#0095DD";
-    	this.canvasCtx.fill();
-    	this.canvasCtx.closePath();
+    	// this.canvasCtx.beginPath();
+    	// this.canvasCtx.rect(this.charX, this.charY, this.charWidth, this.charHeight);
+    	// this.canvasCtx.fillStyle = "#0095DD";
+    	// this.canvasCtx.fill();
+		// this.canvasCtx.closePath();
+		this.canvasCtx.drawImage(AstronautImg, this.nImage * this.charWidth, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
+		
+		if (this.frameCount % this.frameLoopCycle == 0) {
+            this.nImage++;
+        }
+        if (this.nImage > 3) {
+            this.nImage = 0;
+		}
+		this.frameCount++; 
 	}
 };
