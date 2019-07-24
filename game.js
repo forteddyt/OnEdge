@@ -34,7 +34,7 @@ Game.prototype = {
         this.Score = new Score(this.instance_)
 
         // setInterval(() => {console.log(this.frames)}, 1000)
-        this.document.addEventListener('click', this.onClickHandler, false);
+        this.document.addEventListener('click', this.onClickHandler.bind(this), false);
         this.update();        
     },
     update: function(){
@@ -99,7 +99,7 @@ Game.prototype = {
         this.canvasCtx.closePath();
 
         //text
-        this.canvasCtx.fillStyle = "#808080";
+        this.canvasCtx.fillStyle = "#5A5A5A";
         this.canvasCtx.font = "bold 50px Monospace";
         this.canvasCtx.textAlign = "center";
         this.canvasCtx.fillText("GAME OVER", midWidth, midHeight);
@@ -111,7 +111,7 @@ Game.prototype = {
         this.Player.drawDeadChar(); 
     },
     onClickHandler: function(evt) {
-        if (game.gameOver) {
+        if (this.gameOver) {
             var midWidth = canvas.width/2;
             var midHeight = canvas.height/2;
             var buttonWidth = canvas.width*2/5;
@@ -119,7 +119,7 @@ Game.prototype = {
 
             if (evt.layerX > midWidth - buttonWidth/2 && evt.layerX < midWidth + buttonWidth/2 && 
             evt.layerY > 3*midHeight/2 - buttonHeight*2/3 && evt.layerY < 3*midHeight/2 + buttonHeight/3) {
-                game.restartGame();
+                this.restartGame();
             }
         }
     }

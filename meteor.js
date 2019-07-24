@@ -1,6 +1,8 @@
 MeteorImg = new Image();
 MeteorImg.src = 'images/meteor.png'
 meteors = new Array()
+PlanetImg = new Image();
+PlanetImg.src = 'images/planet.png'
 
 function Meteor(canvasCtx, space, type, prevX){
     this.canvasCtx = canvasCtx
@@ -10,6 +12,8 @@ function Meteor(canvasCtx, space, type, prevX){
     this.dY = 0;
     this.type = type;
     this.prevX = prevX;
+
+    this.planetSize = 60;
 
     this.nImage = 0;
     this.imgWidth = 40;
@@ -35,33 +39,18 @@ Meteor.prototype = {
         this.yPos = -this.imgSprite.height - 10; // Meteor should start off of the screen
         if (this.type == 0) {
             this.dX = 0;
-            this.dY = 1.5;
+            this.dY = 1;
         } else if (this.type == 1) {
             this.dX = 0;
-            this.dY = 3;
-        } else if (this.type == 2) {
-            this.dX = 0;
-            this.dY = 4.5;
-        } else if (this.type == 3) {
-            console.log("this is intense!");
-            this.dX = Math.random() > 0.5 ? -1.5 : 1.5;
-            this.dY = 3;
+            this.dY = 2;
         }
-        //this.dX = Math.random() * 1.5 - .75;
-        //this.dY = Math.random() * 3;
-        this.radius = this.imgWidth/4;
+        this.radius = this.imgWidth/4;//TODO
         this.draw();
-        meteors.push(this)
+        meteors.push(this);
     },
     
     draw: function() {
-        // this.canvasCtx.beginPath();
-        // this.canvasCtx.arc(this.xPos, this.yPos+this.imgHeight-(0.8*this.imgWidth), 0.8*(this.imgWidth/2), 0, 2 * Math.PI);
-        // this.canvasCtxfillStyle = "#0095DD";
-        // this.canvasCtx.fill();
-        // this.canvasCtx.closePath();
         this.canvasCtx.drawImage(MeteorImg, this.nImage * this.imgWidth, 0, this.imgWidth, this.imgHeight, this.xPos, this.yPos, this.imgWidth, this.imgHeight);
-
         if (this.frameCount % this.frameLoopCycle == 0) {
             this.nImage++;
         }
