@@ -21,7 +21,6 @@ Space.prototype = {
     update : function(frameCount){
         if(this.shouldSpawnMeteor(frameCount)) {
             this.spawnMeteor(frameCount);
-            console.log(frameCount);
         }
 
         this.meteors.forEach(function(meteor){
@@ -77,7 +76,6 @@ Space.prototype = {
             this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 0));
         }
         this.previousMeteorX = this.meteors[this.meteors.length-1].xPos;
-        console.log(this.previousMeteorX);
     },
 
     removeMeteor: function(targetMeteor){
