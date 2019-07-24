@@ -49,6 +49,7 @@ Game.prototype = {
             this.runningTime += deltaTime
 
             this.frames += 1;
+            this.Score.updateHighScore();
 
             this.Space.update(this.frames)
             this.Platform.update(this.frames)
@@ -102,19 +103,20 @@ Game.prototype = {
         this.canvasCtx.fillStyle = "#5A5A5A";
         this.canvasCtx.font = "bold 50px Monospace";
         this.canvasCtx.textAlign = "center";
-        this.canvasCtx.fillText("GAME OVER", midWidth, midHeight);
+        this.canvasCtx.fillText("GAME OVER", midWidth, midHeight * 2 / 3);
 
         this.canvasCtx.font = "bold 30px Monospace";
         this.canvasCtx.fillText("PLAY AGAIN", midWidth, 3*midHeight/2);
 
         //character
         this.Player.drawDeadChar(); 
+        // this.Score.update(this.frames)        
         
     },
     restart: function() {
         this.frames = 0
         this.gameOver = false;
-    
+     
         this.Space.reset()
         this.Player.reset()
         this.Score.reset()

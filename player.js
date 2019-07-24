@@ -88,7 +88,7 @@ Player.prototype = {
 		if(this.checkStarCollisions(this.space.stars)){
 			this.space.removeMeteors();
 			this.space.removeStars();
-			this.Game.Score.score += 100;
+			this.Game.Score.bonus += 100;
 			console.log("extra points");
 		}
 
