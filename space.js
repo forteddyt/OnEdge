@@ -159,9 +159,13 @@ Space.prototype = {
         }
     },
 
-    removeMeteors: function(){},
+    removeMeteors: function(){
+        meteors = [];
+    },
 
-    removeStars: function(){},
+    removeStars: function(){
+        stars = [];
+    },
 
     removeMeteor: function(targetMeteor){
         for (var i = 0; i < meteors.length; i++) {
