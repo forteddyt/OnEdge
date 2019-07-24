@@ -98,23 +98,6 @@ Player.prototype = {
 		var circle2={x:x2+r2, y:y2+r2, r:r2};
 		var rect={x:x1+i2, y:y1+0.8*i2, w:7*w1/16, h:h1-0.9*i2};
 
-		// this.canvasCtx.beginPath();
-		// this.canvasCtx.arc(circle2.x, circle2.y, circle2.r, 0, 2*Math.PI);
-		// this.canvasCtx.strokeStyle =  "blue";
-        // this.canvasCtx.stroke();
-		// this.canvasCtx.closePath();
-
-		// this.canvasCtx.beginPath();
-		// this.canvasCtx.arc(circle1.x, circle1.y, circle1.r, 0, 2*Math.PI);
-		// this.canvasCtx.strokeStyle =  "blue";
-        // this.canvasCtx.stroke();
-		// this.canvasCtx.closePath();
-
-		// this.canvasCtx.beginPath();
-		// this.canvasCtx.rect(rect.x, rect.y, rect.w, rect.h);
-		// this.canvasCtx.stroke();
-		// this.canvasCtx.closePath();
-
 		var distX = Math.abs(circle2.x - rect.x-rect.w/2);
     	var distY = Math.abs(circle2.y - rect.y-rect.h/2);
 		if(this.getTouch(circle1, circle2)){
