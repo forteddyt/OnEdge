@@ -88,7 +88,7 @@ Player.prototype = {
 		if(this.checkStarCollisions(this.space.stars)){
 			this.space.removeMeteors();
 			this.space.removeStars();
-			this.Game.Score.bonus += 100;
+			this.Game.Score.score += 100;
 			console.log("extra points");
 		}
 
@@ -125,22 +125,7 @@ Player.prototype = {
 
 		var distX = Math.abs(circle2.x - rect.x-rect.w/2);
 		var distY = Math.abs(circle2.y - rect.y-rect.h/2);
-		// this.canvasCtx.beginPath();
-		// this.canvasCtx.arc(circle2.x, circle2.y, circle2.r, 0, 2*Math.PI);
-		// this.canvasCtx.strokeStyle =  "blue";
-        // this.canvasCtx.stroke();
-		// this.canvasCtx.closePath();
-
-		// this.canvasCtx.beginPath();
-		// this.canvasCtx.arc(circle1.x, circle1.y, circle1.r, 0, 2*Math.PI);
-		// this.canvasCtx.strokeStyle =  "blue";
-        // this.canvasCtx.stroke();
-		// this.canvasCtx.closePath();
-
-		// this.canvasCtx.beginPath();
-		// this.canvasCtx.rect(rect.x, rect.y, rect.w, rect.h);
-		// this.canvasCtx.stroke();
-		// this.canvasCtx.closePath();
+		
 		if(this.getTouch(circle1, circle2)){
 			return true;
 		}
@@ -170,6 +155,7 @@ Player.prototype = {
 		}
 		return false;
 	},
+
 	checkStarCollisions: function (stars) {
 		for (i = 0; i < stars.length; i++) {
 			var radius = (stars[i].imgWidth/4);
