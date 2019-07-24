@@ -30,9 +30,9 @@ Meteor.prototype = {
             this.xPos = Math.floor(Math.random() * (this.canvasCtx.canvas.width - 10) + 5);
             var xBias = Math.random() * (this.canvasCtx.canvas.width/4);
             this.xPos += this.xPos > this.canvasCtx.canvas.width/2 ? -xBias : xBias;
-            console.log(" " + this.xPos + " " + xBias);
+            //console.log(" " + this.xPos + " " + xBias);
         }   
-        console.log("final: " + this.xPos);
+        //console.log("final: " + this.xPos);
 
         this.yPos = -this.imgSprite.height - 10; // Meteor should start off of the screen
         if (this.type == 0) {

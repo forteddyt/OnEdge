@@ -88,14 +88,14 @@ Game.prototype = {
         this.canvasCtx.strokeStyle =  "#b5b3b3";
         this.canvasCtx.stroke();
 
-        this.canvasCtx.rect(midWidth - gameOverWidth/2, midHeight - gameOverHeight*2/3, gameOverWidth, gameOverHeight);
-        this.canvasCtx.fillStyle = "#eee";
-        this.canvasCtx.fill();
+        // this.canvasCtx.rect(midWidth - gameOverWidth/2, midHeight - gameOverHeight*2/3, gameOverWidth, gameOverHeight);
+        // this.canvasCtx.fillStyle = "#eee";
+        // this.canvasCtx.fill();
 
         this.canvasCtx.closePath();
 
         //text
-        this.canvasCtx.fillStyle = "#0095DD";
+        this.canvasCtx.fillStyle = "#808080";
         this.canvasCtx.font = "bold 50px Monospace";
         this.canvasCtx.textAlign = "center";
         this.canvasCtx.fillText("GAME OVER", midWidth, midHeight);
