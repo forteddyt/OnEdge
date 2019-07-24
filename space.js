@@ -23,7 +23,7 @@ Space.prototype = {
         }
 
         this.meteors.forEach(function(meteor){
-            meteor.update();
+            meteor.update(frameCount);
         })
     },
 

@@ -32,24 +32,24 @@ Meteor.prototype = {
     },
     
     draw: function() {
-        if(inCtxBounds(this.imgSprite, this.xPos, this.yPos, this.canvasCtx)){
-            this.canvasCtx.drawImage(MeteorImg, this.nImage * this.imgWidth, 0, this.imgWidth, this.imgHeight, this.xPos, this.yPos, this.imgWidth, this.imgHeight);
-            if (this.frameCount > this.frameLoopCycle) {
-                this.nImage++;
-                this.frameCount = 0;
-            }
-            if (this.nImage > 3) {
-              this.nImage = 0;
-            }
+        this.canvasCtx.drawImage(MeteorImg, this.nImage * this.imgWidth, 0, this.imgWidth, this.imgHeight, this.xPos, this.yPos, this.imgWidth, this.imgHeight);
+        
+        if (this.frameCount % this.frameLoopCycle == 0) {
+            this.nImage++;
+        }
+        if (this.nImage > 3) {
+            this.nImage = 0;
         }
     },
 
-    update: function() {
+    update: function(frameCount) {
+        this.frameCount = frameCount
         if(inCtxBounds(this.imgSprite, this.xPos, this.yPos, this.canvasCtx)){
             this.xPos += this.dX
             this.yPos += this.dY
+            this.draw()
         } else {
-          this.space.removeMeteor(this);
+            this.space.removeMeteor(this);
         }
     }
 }

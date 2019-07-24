@@ -32,6 +32,7 @@ Game.prototype = {
         this.Player = new Player(this.instance_)
         this.Score = new Score(this.instance_)
 
+        // setInterval(() => {console.log(this.frames)}, 1000)
         this.update();
     },
     update: function(){
@@ -47,7 +48,7 @@ Game.prototype = {
         this.frames += 1;
 
         this.Space.update(this.frames)
-        this.Platform.update()
+        this.Platform.update(this.frames)
         this.Player.update()
         this.Score.update(this.frames)
 
