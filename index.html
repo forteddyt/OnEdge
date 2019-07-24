@@ -58,11 +58,7 @@ function onKeyDownHandler(evt) {
 
 function onKeyUpHandler(evt) {
 	if (game.gameOver) {
-		if (evt.key == "Right" || evt.key == "ArrowRight" || 
-			evt.key == "Left" || evt.key == "ArrowLeft" ||
-			evt.key == " " || evt.key == "Space") {
-	        game.keyUp = true;
-	    }
+	    game.keyUp = true;
 	}
 }
 
