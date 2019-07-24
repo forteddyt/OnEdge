@@ -22,6 +22,7 @@ function Game(canvasCtx){
     this.Player = null;
     this.Score = null;
     this.gameOver = false;
+    this.keyUp = false;
 
     this.init()
 }
@@ -34,7 +35,6 @@ Game.prototype = {
         this.Score = new Score(this.instance_)
 
         // setInterval(() => {console.log(this.frames)}, 1000)
-        this.document.addEventListener('click', this.onClickHandler.bind(this), false);
         this.update();        
     },
     update: function(){
@@ -109,21 +109,7 @@ Game.prototype = {
 
         //character
         this.Player.drawDeadChar(); 
-    },
-    onClickHandler: function(evt) {
-        if (this.gameOver) {
-            var midWidth = canvas.width/2;
-            var midHeight = canvas.height/2;
-            var buttonWidth = canvas.width*2/5;
-            var buttonHeight = canvas.width/8;
-
-            if (evt.layerX > midWidth - buttonWidth/2 && evt.layerX < midWidth + buttonWidth/2 && 
-            evt.layerY > 3*midHeight/2 - buttonHeight*2/3 && evt.layerY < 3*midHeight/2 + buttonHeight/3) {
-                this.restartGame();
-            }
-        }
     }
-
 }
 
 function getTimeStamp(){
