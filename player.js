@@ -1,10 +1,16 @@
+function Player(game) {
+	// Singleton
+    if(Player.instance_){
+        return Player.instance_
+	}
+	this.instance_ = this
+	this.Game = game;
+	this.Space = null;
+	this.Platform = null;
 
-
-
-function Player(canvasCtx, document, space) {
-	this.canvasCtx = canvasCtx;
+	this.canvasCtx = null;
 	this.canvas = null;
-	this.space = space;
+	
 	this.charX = 0; //left bound of the character
 	this.rightPressed = false; //true iff right keyboard was pressed
 	this.leftPressed = false; //true iff left keyboard was pressed
@@ -13,13 +19,16 @@ function Player(canvasCtx, document, space) {
 	this.charWidth = 20
 	this.charHeight = 30
 	this.charSpeed = 3, /*default movement speed of the player per frame */
-	this.platformHeight = 10
 
 	this.init();
 }
 
 Player.prototype = {
 	init: function(){
+		this.space = this.Game.Space
+		this.Platform = this.Game.Platform
+
+		this.canvasCtx = this.Game.canvasCtx
 		this.canvas = this.canvasCtx.canvas;
 		this.charX = this.canvas.width / 2; //left bound of the character
 
@@ -60,12 +69,12 @@ Player.prototype = {
 		for (i = 0; i < meteors.length; i++) {
 			if (this.charX < meteors[i].xPos &&
 				meteors[i].xPos < this.charX + this.charWidth &&
-				meteors[i].yPos >= canvas.height - (this.charHeight + this.platformHeight) && 
-				meteors[i].yPos < canvas.height - this.platformHeight) {
+				meteors[i].yPos >= canvas.height - (this.charHeight + this.Platform.platformHeight) && 
+				meteors[i].yPos < canvas.height - this.Platform.platformHeight) {
 				return true;
 			}
 		}
-		if (this.charX + this.charWidth < this.platformX || this.charX > this.platformX + this.platformWidth) {
+		if (this.charX + this.charWidth < this.Platform.platformX || this.charX > this.Platform.platformX + this.Platform.platformWidth) {
 			return true;
 		}
 		return false;
@@ -73,7 +82,7 @@ Player.prototype = {
 
 	drawChar : function() {
     	this.canvasCtx.beginPath();
-    	this.canvasCtx.rect(this.charX, this.canvas.height-this.charHeight-this.platformHeight, this.charWidth, this.charHeight);
+    	this.canvasCtx.rect(this.charX, this.canvas.height-this.charHeight-this.Platform.platformHeight, this.charWidth, this.charHeight);
     	this.canvasCtx.fillStyle = "#0095DD";
     	this.canvasCtx.fill();
     	this.canvasCtx.closePath();

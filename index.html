@@ -14,6 +14,7 @@
 <script src="player.js"></script>
 <script src="meteor.js"></script>
 <script src="space.js"></script>
+<script src="platform.js"></script>
 <script src="game.js"></script>
 <script>
 
@@ -24,8 +25,6 @@ new Game(ctx)
 
 const Consts = {
 	meteorRadius : 10,
-	platformWidth : canvas.width*1/2,
-	platformX : (canvas.width-canvas.width*1/2)/2, /*left bound of the platform  */
 	meteorSpeed : 2, //default fall speed for meteors per frame */
 	buttonWidth : canvas.width*2/5,
 	buttonHeight : canvas.width/8,
@@ -46,14 +45,6 @@ const SCORE_FLASH_FRAMES = 240;
 const SCORE_FLASH_SPEED = 30;
 
 //Drawing
-function drawPlatform() {
-    ctx.beginPath();
-    ctx.rect(Consts.platformX, canvas.height-Consts.platformHeight, Consts.platformWidth, Consts.platformHeight);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
-}
-
 function drawScoreCounter() {
 	var score = Math.floor(frameCount/10);
 	ctx.font = "20px Monospace";

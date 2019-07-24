@@ -16,6 +16,7 @@ function Game(canvasCtx){
     this.runningTime = 0;
 
     this.Space = null;
+    this.Platform = null;
     this.Player = null;
 
     this.init()
@@ -23,8 +24,9 @@ function Game(canvasCtx){
 
 Game.prototype = {
     init: function(){
-        this.Space = new Space(this.canvasCtx)
-        this.Player = new Player(this.canvasCtx, this.document, this.Space)
+        this.Space = new Space(this.instance_)
+        this.Platform = new Platform(this.instance_)
+        this.Player = new Player(this.instance_)
 
         this.update();
     },
@@ -39,6 +41,7 @@ Game.prototype = {
         this.runningTime += deltaTime
 
         this.Space.update(this.runningTime)
+        this.Platform.update()
         this.Player.update()
 
         this.scheduleNextUpdate()
