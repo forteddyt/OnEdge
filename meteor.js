@@ -1,6 +1,8 @@
 MeteorImg = new Image();
 MeteorImg.src = 'images/meteor.png'
 meteors = new Array()
+PlanetImg = new Image();
+PlanetImg.src = 'images/planet.png'
 
 function Meteor(canvasCtx, space, type, prevX){
     this.canvasCtx = canvasCtx
@@ -10,6 +12,8 @@ function Meteor(canvasCtx, space, type, prevX){
     this.dY = 0;
     this.type = type;
     this.prevX = prevX;
+
+    this.planetSize = 60;
 
     this.nImage = 0;
     this.imgWidth = 40;

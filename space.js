@@ -1,3 +1,10 @@
+PlanetImg = new Image();
+PlanetImg.src = 'images/planet.png'
+StarImg1 = new Image();
+StarImg1.src = 'images/star1.png'
+StarImg2 = new Image();
+StarImg2.src = 'images/star2.png'
+
 function Space(game){
     // Singleton
     if(Space.instance_){
@@ -9,6 +16,9 @@ function Space(game){
     this.stars = [];
     this.previousMeteorX = 0;
 
+    this.planetSize = 180;
+    this.star1Size = 24;
+    this.star2Size = 35;
     this.instance_ = this;
     this.init()
 }
@@ -20,6 +30,21 @@ Space.prototype = {
         this.update()
     },
     update : function(frameCount){
+        this.canvasCtx.drawImage(PlanetImg, 0, 0, this.planetSize, this.planetSize, 270, 40, this.planetSize, this.planetSize);
+        
+        this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 30, 40, this.star1Size * 0.8, this.star1Size * 0.8)
+        this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 150, 20, this.star1Size * 0.8, this.star1Size * 0.8)
+        this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 220, 70, this.star1Size * 0.8, this.star1Size * 0.8)
+        this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 40, 200, this.star1Size * 0.8, this.star1Size * 0.8)
+        this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 170, 180, this.star1Size * 0.8, this.star1Size * 0.8)
+        this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 400, 240, this.star1Size * 0.8, this.star1Size * 0.8)
+
+        this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 420, 40, this.star2Size * 0.75, this.star2Size * 0.75)
+        this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 80, 100, this.star2Size * 0.75, this.star2Size * 0.75)
+        this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 300, 200, this.star2Size * 0.75, this.star2Size * 0.75)
+        this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 100, 230, this.star2Size * 0.75, this.star2Size * 0.75)
+
+        
         if(this.shouldSpawnMeteor(frameCount)) {
             this.spawnMeteor(frameCount);
         }
