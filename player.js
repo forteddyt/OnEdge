@@ -2,6 +2,8 @@ AstronautImgRight = new Image();
 AstronautImgRight.src = 'images/astronautright.png'
 AstronautImgLeft = new Image(); 
 AstronautImgLeft.src = 'images/astronautleft.png'
+AstronautImgDead = new Image(); 
+AstronautImgDead.src = 'images/astronautdead.png'
 
 function Player(game) {
 	// Singleton
@@ -128,6 +130,11 @@ Player.prototype = {
 			return true;
 		}
 		return false;
+	},
+
+	drawDeadChar : function(){
+		console.log(AstronautImgDead);
+		this.canvasCtx.drawImage(AstronautImgDead, 0, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
 	},
 
 	drawChar : function() {
