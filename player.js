@@ -91,9 +91,10 @@ Player.prototype = {
 		if(this.checkStarCollisions(this.space.stars)){
 			this.space.removeMeteors();
 			this.space.removeStars();
+			this.Game.flickerScreen = true;
 			this.Game.Score.bonus += 100;
 			this.Game.Score.addBonus = true;
-			console.log("extra points");
+			// console.log("extra points");
 		}
 
 		if (!this.Game.gameOver){
@@ -164,7 +165,7 @@ Player.prototype = {
 			var rectIndent = 9*this.charWidth/32;
 
 			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, astroRadius, indent, rectIndent, xcircle, ycircle, radius)){
-				console.log("collide" + i);
+				// console.log("collide" + i);
 				return true;
 			} 
 		}
@@ -187,7 +188,7 @@ Player.prototype = {
 			var rectIndent = 9*this.charWidth/32;
 
 			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, astroRadius, indent, rectIndent, xcircle, ycircle, radius)){
-				console.log("collide" + i);
+				// console.log("collide" + i);
 				return true;
 			}
 		}

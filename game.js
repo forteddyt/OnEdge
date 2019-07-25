@@ -11,11 +11,14 @@ function Game(canvasCtx){
     this.document = document;
 
     this.updatePending = false;
+    this.flickerScreen = false;
     this.rafId = 0;
     this.time = 0;
     this.runningTime = 0;
 
     this.frames = 0;
+    this.flickerFrameDuration = 20;
+    this.flickerFrame = -this.flickerFrameDuration;
 
     this.Space = null;
     this.Platform = null;
@@ -41,13 +44,23 @@ Game.prototype = {
         this.updatePending = false;
 
         this.clearCanvas();
+
+        if(this.flickerScreen){
+            this.flickerFrame = this.frames
+            this.flickerScreen = false
+        }
+
+        if(this.flickerFrame + this.flickerFrameDuration < this.frames){
+            this.Space.update(this.frames)
+            this.Platform.update(this.frames)
+            this.Player.update()
+        }
+
+
         this.Score.updateHighScore();
-        this.Space.update(this.frames)
-        this.Platform.update(this.frames)
-        this.Player.update()
         this.Score.update(this.frames)
         
-            this.frames += 1;
+        this.frames += 1;
         if (!this.gameOver) {
             var now = getTimeStamp();
             var deltaTime = now - (this.time || now);
@@ -114,6 +127,8 @@ Game.prototype = {
     },
     restart: function() {
         this.frames = 0
+        this.flickerFrame = -this.flickerFrameDuration;
+        this.flickerScreen = false;
         this.gameOver = false;
      
         this.Space.reset()
