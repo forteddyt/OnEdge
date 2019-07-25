@@ -54,7 +54,7 @@ Score.prototype = {
         this.canvasCtx.textAlign = "right";
         this.canvasCtx.fillText("HI " + this.highScore, canvas.width - 10, 20)
         if(this.addBonus){
-            this.addBonusDuration = 180;
+            this.addBonusDuration = 80;
             this.addBonus = false;
         }
         if(this.addBonusDuration > 0) {
