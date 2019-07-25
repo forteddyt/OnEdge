@@ -93,7 +93,6 @@ Player.prototype = {
 			this.space.removeStars();
 			this.Game.Score.bonus += 100;
 			this.Game.Score.addBonus = true;
-			console.log("extra points");
 		}
 
 		if (!this.Game.gameOver){
@@ -111,13 +110,7 @@ Player.prototype = {
 		Obj2Center=[obj2.x+obj2.r,obj2.y+obj2.r];
 	
 		var distance=Math.sqrt(Math.pow(Obj2Center[0]-Obj1Center[0], 2) + Math.pow( Obj2Center[1]-Obj1Center[1], 2) );
-		if(distance < (obj1.r+obj2.r)){
-			return true;
-			//console.log("circle touch");
-		}
-		else{
-			return false;
-		}
+		return distance < (obj1.r+obj2.r);
 	},
 
 	collide : function(x1, y1, w1, h1, r1, i1, i2, x2, y2, r2) {
@@ -164,7 +157,6 @@ Player.prototype = {
 			var rectIndent = 9*this.charWidth/32;
 
 			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, astroRadius, indent, rectIndent, xcircle, ycircle, radius)){
-				console.log("collide" + i);
 				return true;
 			} 
 		}
@@ -187,7 +179,6 @@ Player.prototype = {
 			var rectIndent = 9*this.charWidth/32;
 
 			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, astroRadius, indent, rectIndent, xcircle, ycircle, radius)){
-				console.log("collide" + i);
 				return true;
 			}
 		}
