@@ -33,8 +33,7 @@ Game.prototype = {
         this.Space = new Space(this.instance_)
         this.Platform = new Platform(this.instance_)
         this.Player = new Player(this.instance_)
-
-        // setInterval(() => {console.log(this.frames)}, 1000)
+        
         this.update();        
     },
     update: function(){

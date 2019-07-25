@@ -58,8 +58,8 @@ function onClickHandler(evt) {
 		var buttonWidth = canvas.width*2/5;
 		var buttonHeight = canvas.width/8;
 
-		if (evt.layerX > midWidth - buttonWidth/2 && evt.layerX < midWidth + buttonWidth/2 && 
-		evt.layerY > 5 * midHeight / 4 - buttonHeight*2/3 && evt.layerY <5 * midHeight / 4 + buttonHeight/3) {
+		if (evt.offsetX > midWidth - buttonWidth/2 && evt.offsetX < midWidth + buttonWidth/2 && 
+		evt.offsetY > 5 * midHeight / 4 - buttonHeight*2/3 && evt.offsetY <5 * midHeight / 4 + buttonHeight/3) {
 			restartGame();
 		}
 	}

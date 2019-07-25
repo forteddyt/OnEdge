@@ -96,21 +96,12 @@ Space.prototype = {
     shouldSpawnMeteor: function(frameCount){
         //spawn rate of meteors increases asymptotically with time
         var invFreq = Math.ceil(10 + 35/((frameCount + 1200)/1200));
-        if (frameCount % invFreq == 0) {
-            console.log("hi teddy")
-            return true;
-        } else {
-            return false;
-        }
+        return (frameCount % invFreq == 0);
     },
 
     shouldSpawnStar: function(frameCount){
         //spawn rate of meteors increases asymptotically with time
-        if (frameCount % 1000 == 0 && frameCount != 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return (frameCount % 1000 == 0 && frameCount != 0);
     },
 
     spawnMeteor : function(frameCount){
