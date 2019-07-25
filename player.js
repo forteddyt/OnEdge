@@ -57,8 +57,8 @@ Player.prototype = {
 		this.document.addEventListener("keydown", this.keyDownHandler.bind(this), false);
 		this.document.addEventListener("keyup", this.keyUpHandler.bind(this), false);
 		
-		this.rightPressed = false; //true iff right keyboard was pressed
-		this.leftPressed = false; //true iff left keyboard was pressed
+		this.rightPressed = false; //true iff right keyboard was pressed during gameplay
+		this.leftPressed = false; //true iff left keyboard was pressed during gameplay
 	},
 
 	//Input Handling
@@ -82,32 +82,28 @@ Player.prototype = {
 	},
 
 	update : function() {
-		if (!this.Game.gameOver && this.rightPressed && this.charX < this.canvas.width-this.charWidth) {
-	        this.charX += this.charSpeed;
-	    } else if (!this.Game.gameOver && this.leftPressed && this.charX > 0) {
-	        this.charX -= this.charSpeed;
-		}
-
-		if(this.checkStarCollisions(this.space.stars)){
-			this.space.removeMeteors();
-			this.space.removeStars();
-			this.Game.Score.bonus += 100;
-			this.Game.Score.addBonus = true;
-		}
-
-		if (!this.Game.gameOver){
-			this.Game.gameOver = this.checkGameOverCollisions(this.space.meteors);
-		}
-
 		if (!this.Game.gameOver) {
+			if (this.rightPressed && this.charX < this.canvas.width-this.charWidth) {
+				this.charX += this.charSpeed;
+			} else if (this.leftPressed && this.charX > 0) {
+				this.charX -= this.charSpeed;
+			}
+
+			if (this.checkStarCollisions(this.space.stars)) {
+				this.space.removeMeteors();
+				this.space.removeStars();
+				this.Game.Score.bonus += 100;
+				this.Game.Score.addBonus = true;
+			}
+
+			this.Game.gameOver = this.checkGameOverCollisions(this.space.meteors);
 			this.drawChar();
-		}
-	
+		}	
 	},
 
 	getTouch : function(obj1,obj2){
-		Obj1Center=[obj1.x+obj1.r, obj1.y+obj1.r];
-		Obj2Center=[obj2.x+obj2.r,obj2.y+obj2.r];
+		var Obj1Center=[obj1.x+obj1.r, obj1.y+obj1.r];
+		var Obj2Center=[obj2.x+obj2.r,obj2.y+obj2.r];
 	
 		var distance=Math.sqrt(Math.pow(Obj2Center[0]-Obj1Center[0], 2) + Math.pow( Obj2Center[1]-Obj1Center[1], 2) );
 		return distance < (obj1.r+obj2.r);
@@ -146,7 +142,7 @@ Player.prototype = {
 		return (dx*dx+dy*dy<=(circle2.r*circle2.r));
 	},
 
-	checkGameOverCollisions : function(meteors, ismeteor) {
+	checkGameOverCollisions : function(meteors) {
 		for (i = 0; i < meteors.length; i++) {
 			var radius = (meteors[i].imgWidth/4);
 			var ycircle = meteors[i].yPos + meteors[i].imgHeight - (3*radius);
@@ -161,7 +157,6 @@ Player.prototype = {
 			} 
 		}
 		if (this.charX + (this.charWidth * 0.8) < this.Platform.platformX || this.charX + (this.charWidth * 0.2) > this.Platform.platformX + this.Platform.platformWidth) {
-			//TODO add animation here for player falling off edge
 			this.offEdge = true; 
 			return true;
 		}
@@ -191,13 +186,7 @@ Player.prototype = {
 		this.canvasCtx.drawImage(AstronautImgDead, 0, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
 	},
 
-	drawChar : function() {
-    	// this.canvasCtx.beginPath();
-    	// this.canvasCtx.rect(this.charX, this.charY, this.charWidth, this.charHeight);
-    	// this.canvasCtx.fillStyle = "#0095DD";
-    	// this.canvasCtx.fill();
-		// this.canvasCtx.closePath();
-		
+	drawChar : function() {		
 		if (this.rightPressed){
 			this.canvasCtx.drawImage(AstronautImgRight, this.nImage * this.charWidth, 0, this.charWidth, this.charHeight, this.charX, this.charY, this.charWidth, this.charHeight);
 			this.facingRight = true; 

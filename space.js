@@ -71,12 +71,14 @@ Space.prototype = {
             this.canvasCtx.drawImage(PlanetImg, 0, 0, this.planetSize, this.planetSize, 270, 40, this.planetSize, this.planetSize);
         }
 
-        if(!this.Game.gameOver && this.shouldSpawnMeteor(frameCount)) {
-            this.spawnMeteor(frameCount);
-        }
-
-        if(!this.Game.gameOver && this.shouldSpawnStar(frameCount)) {
-            this.spawnStar(frameCount);
+        if (!this.Game.gameOver) {
+            if (this.shouldSpawnMeteor(frameCount)) {
+                this.spawnMeteor(frameCount);
+            }
+    
+            if (this.shouldSpawnStar(frameCount)) {
+                this.spawnStar(frameCount);
+            }
         }
 
         this.meteors.forEach(function(meteor){
@@ -100,7 +102,6 @@ Space.prototype = {
     },
 
     shouldSpawnStar: function(frameCount){
-        //spawn rate of meteors increases asymptotically with time
         return (frameCount % 1000 == 0 && frameCount != 0);
     },
 

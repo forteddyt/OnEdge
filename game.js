@@ -1,6 +1,3 @@
-var c = document.getElementById("gameCanvas");
-var ctx = c.getContext("2d");
-
 function Game(canvasCtx){
     if(Game.instance_){
         return Game.instance_;
@@ -46,7 +43,7 @@ Game.prototype = {
         this.Player.update()
         this.Score.update(this.frames)
         
-            this.frames += 1;
+        this.frames += 1;
         if (!this.gameOver) {
             var now = getTimeStamp();
             var deltaTime = now - (this.time || now);
@@ -70,9 +67,6 @@ Game.prototype = {
     clearCanvas: function() {
         this.canvasCtx.clearRect(0, 0, this.canvasCtx.canvas.width, this.canvasCtx.canvas.height);
     },
-    restartGame: function() {
-        //todo     
-    },
     //Game Controllers
 
     endGameGUI: function() {
@@ -91,10 +85,6 @@ Game.prototype = {
         this.canvasCtx.strokeStyle =  "#b5b3b3";
         this.canvasCtx.stroke();
 
-        // this.canvasCtx.rect(midWidth - gameOverWidth/2, midHeight - gameOverHeight*2/3, gameOverWidth, gameOverHeight);
-        // this.canvasCtx.fillStyle = "#eee";
-        // this.canvasCtx.fill();
-
         this.canvasCtx.closePath();
 
         //text
@@ -104,11 +94,7 @@ Game.prototype = {
         this.canvasCtx.fillText("GAME OVER", midWidth, midHeight * 3 / 4);
 
         this.canvasCtx.font = "bold 30px Monospace";
-        this.canvasCtx.fillText("PLAY AGAIN", midWidth, 5 * midHeight / 4);
-
-        //character
-        //this.Player.drawDeadChar(); 
-        // this.Score.update(this.frames)        
+        this.canvasCtx.fillText("PLAY AGAIN", midWidth, 5 * midHeight / 4);  
         
     },
     restart: function() {

@@ -31,11 +31,6 @@ Platform.prototype = {
         this.platformY = this.canvas.height - this.platformHeight
         },
     draw: function(){
-        // this.canvasCtx.beginPath();
-        // this.canvasCtx.rect(this.platformX, this.canvas.height - this.platformHeight, this.platformWidth, this.platformHeight);
-        // this.canvasCtxfillStyle = "#0095DD";
-        // this.canvasCtx.fill();
-        // this.canvasCtx.closePath();
         this.canvasCtx.drawImage(PlatformImg, this.platformX, this.platformY, this.platformWidth, this.platformHeight);
     },
     update: function(){

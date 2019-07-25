@@ -37,36 +37,40 @@ Meteor.prototype = {
         }  
 
         this.yPos = -this.imgSprite.height - 10; // Meteor should start off of the screen
-        if (this.type == -2) {
-            this.dX = 0;
-            this.dY = 2.5;
-            this.xPos = this.space.Game.Player.charX - 10 + Math.random() * 20;
-        } else if (this.type == -1) {
-            this.dX = 0;
-            this.dY = 2.5;
-            this.xPos = this.space.Game.Player.charX;
-        } else if (this.type == 0) {
-            this.dX = 0;
-            this.dY = 2.5;
-        } else if (this.type == 1) {
-            this.dX = 0;
-            this.dY = 4;
-        } else if (this.type == 2) {
-            this.dX = 0;
-            this.dY = 5.5;
-        } else if (this.type == 3) {
-            this.dX = Math.random() > 0.5 ? -1.0 : 1.0;
-            this.dY = 4;
-        } else if (this.type == 4) {
-            this.dX = 0;
-            this.dY = 5.5;
-            this.xPos = this.space.Game.Player.charX - 10 + Math.random() * 40;
-        } else if (this.type == 5) {
-            this.dX = Math.random() > 0.5 ? -1.5 : 1.5;
-            this.dY = 4;
-            this.xPos = this.space.Game.Player.charX - 10 + Math.random() * 40;
-        }
         this.radius = this.imgWidth/4;
+        this.dX = 0;
+        switch (this.type) {
+            case -2:
+                this.dY = 2.5;
+                this.xPos = this.space.Game.Player.charX - 10 + Math.random() * 20;
+                break;
+            case -1:
+                this.dY = 2.5;
+                this.xPos = this.space.Game.Player.charX;
+                break;
+            case 0:
+                this.dY = 2.5;
+                break;
+            case 1:
+                this.dY = 4;
+                break;
+            case 2:
+                this.dY = 5.5;
+                break;
+            case 3:
+                this.dX = Math.random() > 0.5 ? -1.0 : 1.0;
+                this.dY = 4;
+                break;
+            case 4:
+                this.dY = 5.5;
+                this.xPos = this.space.Game.Player.charX - 10 + Math.random() * 40;
+                break;
+            case 5:
+                this.dX = Math.random() > 0.5 ? -1.5 : 1.5;
+                this.dY = 4;
+                this.xPos = this.space.Game.Player.charX - 10 + Math.random() * 40;
+                break;
+        }
         this.draw();
         meteors.push(this);
     },
