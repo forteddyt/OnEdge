@@ -202,7 +202,11 @@ Space.prototype = {
                 this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 5, this.previousMeteorX));
             }
         } else {
-            this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 5));
+            if (rand < 0.5) {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 4, this.previousMeteorX));
+            } else {
+                this.meteors.push(new Meteor(this.canvasCtx, this.instance_, 3, this.previousMeteorX));
+            }
         }
         this.previousMeteorX = this.meteors[this.meteors.length-1].xPos;
     },
