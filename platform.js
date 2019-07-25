@@ -12,8 +12,8 @@ function Platform(game){
     this.canvasCtx = null
     this.canvas = null
 
-	this.platformHeight = 0
-    this.platformWidth = 0
+	this.platformHeight = 18
+    this.platformWidth = 300
     this.platformX = 0
     this.platformY = 0
     
@@ -25,8 +25,6 @@ Platform.prototype = {
         this.canvasCtx = this.Game.canvasCtx
         this.canvas = this.canvasCtx.canvas
 
-        this.platformHeight = 16       
-        this.platformWidth = this.canvas.width * 3 / 5
         this.platformX =  (this.canvas.width / 5)  /*left bound of the platform  */
         this.platformY = this.canvas.height - this.platformHeight
         },
