@@ -157,7 +157,6 @@ Player.prototype = {
 			var rectIndent = 9*this.charWidth/32;
 
 			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, astroRadius, indent, rectIndent, xcircle, ycircle, radius)){
-				console.log("collide" + i);
 				return true;
 			} 
 		}
@@ -180,7 +179,6 @@ Player.prototype = {
 			var rectIndent = 9*this.charWidth/32;
 
 			if(this.collide(this.charX, this.charY, this.charWidth, this.charHeight, astroRadius, indent, rectIndent, xcircle, ycircle, radius)){
-				console.log("collide" + i);
 				return true;
 			}
 		}
