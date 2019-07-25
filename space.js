@@ -15,6 +15,7 @@ function Space(game){
     this.meteors = [];
     this.stars = [];
     this.previousMeteorX = 0;
+    this.framesPlayed = 0;
 
     this.planetSize = 180;
     this.star1Size = 24;
@@ -30,46 +31,46 @@ Space.prototype = {
         this.meteors = [];
         this.stars = [];
         this.previousMeteorX = 0;
+        this.framesPlayed = 0;
         this.update();
 
     },
     update : function(frameCount){
-        curScore = this.Game.Score.score
 
-
-        if (curScore > 50) {
+        if (!this.Game.gameOver) {
+            this.framesPlayed = frameCount;
+        }
+        if (this.framesPlayed > 500) {
             this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 30, 40, this.star1Size * 0.8, this.star1Size * 0.8)
         }
-        if (curScore > 100) {
+        if (this.framesPlayed > 1000) {
             this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 150, 20, this.star1Size * 0.8, this.star1Size * 0.8)
         }
-        if (curScore > 150) {
+        if (this.framesPlayed > 1500) {
             this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 220, 70, this.star1Size * 0.8, this.star1Size * 0.8)
         }
-        if (curScore > 200) {
+        if (this.framesPlayed > 2000) {
             this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 40, 200, this.star1Size * 0.8, this.star1Size * 0.8)
         }
-        if (curScore > 250) {
+        if (this.framesPlayed > 2500) {
             this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 170, 180, this.star1Size * 0.8, this.star1Size * 0.8)
         }
-        if (curScore > 300) {
+        if (this.framesPlayed > 3000) {
             this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 420, 40, this.star2Size * 0.75, this.star2Size * 0.75)
         }
-        if (curScore > 350) {
+        if (this.framesPlayed > 3500) {
             this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 80, 100, this.star2Size * 0.75, this.star2Size * 0.75)
         }
-        if (curScore > 400) {
+        if (this.framesPlayed > 4000) {
             this.canvasCtx.drawImage(StarImg2, 0, 0, this.star2Size, this.star2Size, 300, 200, this.star2Size * 0.75, this.star2Size * 0.75)
         }
-        if (curScore > 450) {
+        if (this.framesPlayedt > 4500) {
             this.canvasCtx.drawImage(StarImg1, 0, 0, this.star1Size, this.star1Size, 400, 240, this.star1Size * 0.8, this.star1Size * 0.8)
         }
-        if (curScore > 500) {
+        if (this.framesPlayed > 5000) {
             this.canvasCtx.drawImage(PlanetImg, 0, 0, this.planetSize, this.planetSize, 270, 40, this.planetSize, this.planetSize);
         }
 
-
-        
         if(!this.Game.gameOver && this.shouldSpawnMeteor(frameCount)) {
             this.spawnMeteor(frameCount);
         }
